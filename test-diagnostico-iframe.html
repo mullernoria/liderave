@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Profesional - Lidera Tu Vida Ve</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .block {
+            border: 1px solid #000;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .block-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 8px;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .options {
+            margin-left: 10px;
+        }
+        
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #000;
+            margin-top: 5px;
+        }
+        
+        .scale-container {
+            display: flex;
+            gap: 15px;
+            margin-left: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .scale-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .scale-option input {
+            margin-right: 5px;
+        }
+        
+        .submit-btn {
+            background-color: #000;
+            color: #fff;
+            padding: 15px 40px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 30px auto;
+            border: 2px solid #000;
+        }
+        
+        .submit-btn:hover {
+            background-color: #333;
+        }
+        
+        .results-container {
+            display: none;
+        }
+        
+        .results-section {
+            border: 1px solid #000;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .results-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+        
+        .result-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 3px solid #000;
+            padding-left: 15px;
+        }
+        
+        .critical {
+            border-left-color: #d00;
+        }
+        
+        .warning {
+            border-left-color: #f90;
+        }
+        
+        .strength {
+            border-left-color: #090;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .print-btn {
+            background-color: #fff;
+            color: #000;
+            padding: 10px 30px;
+            border: 2px solid #000;
+            cursor: pointer;
+            font-size: 14px;
+            display: block;
+            margin: 20px auto;
+        }
+        
+        .print-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        @media print {
+            .print-btn, .submit-btn {
+                display: none;
+            }
+        }
+
+        .error-message {
+            color: #d00;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .required {
+            color: #d00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diagnóstico Profesional</h1>
+        <p class="subtitle">lideratuvidave.org</p>
+        
+        <form id="diagnosticForm">
+            <!-- BLOQUE A -->
+            <div class="block">
+                <div class="block-title">Bloque A – Perfil y contexto profesional</div>
+                
+                <div class="question">
+                    <label class="question-text">A1. Situación laboral actual <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="a1" value="empleado" required>
+                            <label>Empleado/a</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a1" value="freelancer">
+                            <label>Freelancer / independiente</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a1" value="emprendedor">
+                            <label>Emprendedor/a</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a1" value="transicion">
+                            <label>En transición laboral</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">A2. Rol principal que desempeñas actualmente <span class="required">*</span></label>
+                    <input type="text" name="a2" required placeholder="Ejemplo: Gerente de proyectos, Desarrollador, Contador, etc.">
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">A3. Industria en la que desarrollas tu trabajo <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="a3" value="educacion" required>
+                            <label>Educación</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a3" value="servicios">
+                            <label>Servicios profesionales</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a3" value="tecnologia">
+                            <label>Tecnología</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a3" value="ventas">
+                            <label>Ventas / Comercial</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a3" value="salud">
+                            <label>Salud</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a3" value="administracion">
+                            <label>Administración / Operaciones</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a3" value="otra">
+                            <label>Otra</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">A4. Modalidad de trabajo <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="a4" value="remoto" required>
+                            <label>Remoto</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a4" value="presencial">
+                            <label>Presencial</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a4" value="hibrido">
+                            <label>Híbrido</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">A5. Años de experiencia profesional <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="a5" value="0-2" required>
+                            <label>0–2</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a5" value="3-5">
+                            <label>3–5</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a5" value="6-10">
+                            <label>6–10</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="a5" value="10+">
+                            <label>Más de 10</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BLOQUE B -->
+            <div class="block">
+                <div class="block-title">Bloque B – Objetivo profesional</div>
+                
+                <div class="question">
+                    <label class="question-text">B1. ¿Cuál es tu objetivo principal para los próximos 12 meses? <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="b1" value="mejorar" required>
+                            <label>Mejorar desempeño en mi rol actual</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="b1" value="ascender">
+                            <label>Ascender o asumir liderazgo</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="b1" value="cambiar_rol">
+                            <label>Cambiar de rol</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="b1" value="cambiar_industria">
+                            <label>Cambiar de industria</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="b1" value="ingresos">
+                            <label>Aumentar ingresos / empleabilidad</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="b1" value="marca">
+                            <label>Consolidar marca profesional</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BLOQUE C -->
+            <div class="block">
+                <div class="block-title">Bloque C – Evaluación de habilidades técnicas</div>
+                <p style="margin-bottom: 15px; font-style: italic;">Escala: 1 = muy bajo / 5 = muy alto</p>
+                
+                <div class="question">
+                    <label class="question-text">C1. Dominio de herramientas técnicas necesarias para tu rol <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="c1" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="c1" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="c1" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="c1" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="c1" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">C2. Capacidad para organizar y ejecutar procesos de trabajo <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="c2" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="c2" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="c2" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="c2" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="c2" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">C3. Gestión de proyectos o entregables <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="c3" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="c3" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="c3" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="c3" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="c3" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">C4. Análisis de información para tomar decisiones <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="c4" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="c4" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="c4" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="c4" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="c4" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">C5. Capacidad para aprender y adoptar nuevas herramientas <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="c5" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="c5" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="c5" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="c5" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="c5" value="5"><label>5</label></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BLOQUE D -->
+            <div class="block">
+                <div class="block-title">Bloque D – Evaluación de habilidades blandas</div>
+                <p style="margin-bottom: 15px; font-style: italic;">Escala: 1 = muy bajo / 5 = muy alto</p>
+                
+                <div class="question">
+                    <label class="question-text">D1. Comunicación clara y asertiva <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="d1" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="d1" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="d1" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="d1" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="d1" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">D2. Capacidad para priorizar y gestionar tu tiempo <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="d2" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="d2" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="d2" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="d2" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="d2" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">D3. Manejo del estrés y presión laboral <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="d3" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="d3" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="d3" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="d3" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="d3" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">D4. Capacidad para recibir feedback y ajustar conductas <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="d4" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="d4" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="d4" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="d4" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="d4" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">D5. Colaboración con otras personas <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="d5" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="d5" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="d5" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="d5" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="d5" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">D6. Autonomía y autoliderazgo <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="d6" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="d6" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="d6" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="d6" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="d6" value="5"><label>5</label></div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">D7. Pensamiento crítico y resolución de problemas <span class="required">*</span></label>
+                    <div class="scale-container">
+                        <div class="scale-option"><input type="radio" name="d7" value="1" required><label>1</label></div>
+                        <div class="scale-option"><input type="radio" name="d7" value="2"><label>2</label></div>
+                        <div class="scale-option"><input type="radio" name="d7" value="3"><label>3</label></div>
+                        <div class="scale-option"><input type="radio" name="d7" value="4"><label>4</label></div>
+                        <div class="scale-option"><input type="radio" name="d7" value="5"><label>5</label></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BLOQUE E -->
+            <div class="block">
+                <div class="block-title">Bloque E – Preguntas conductuales</div>
+                
+                <div class="question">
+                    <label class="question-text">E1. ¿Con qué frecuencia debes rehacer tareas por falta de claridad o errores evitables? <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="e1" value="nunca" required>
+                            <label>Nunca</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="e1" value="aveces">
+                            <label>A veces</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="e1" value="frecuentemente">
+                            <label>Frecuentemente</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">E2. ¿Te resulta difícil decir "no" o renegociar prioridades? <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="e2" value="si" required>
+                            <label>Sí</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="e2" value="no">
+                            <label>No</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="e2" value="aveces">
+                            <label>A veces</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">E3. ¿Sientes que trabajas mucho pero no siempre en lo más importante? <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="e3" value="si" required>
+                            <label>Sí</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="e3" value="no">
+                            <label>No</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="e3" value="aveces">
+                            <label>A veces</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">E4. ¿Las conversaciones difíciles te generan incomodidad o las evitas? <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="e4" value="si" required>
+                            <label>Sí</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="e4" value="no">
+                            <label>No</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="e4" value="aveces">
+                            <label>A veces</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BLOQUE F -->
+            <div class="block">
+                <div class="block-title">Bloque F – Disponibilidad y compromiso</div>
+                
+                <div class="question">
+                    <label class="question-text">F1. ¿Cuántas horas semanales puedes dedicar a tu desarrollo profesional? <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="f1" value="menos2" required>
+                            <label>Menos de 2</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="f1" value="2-4">
+                            <label>2–4</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="f1" value="5-8">
+                            <label>5–8</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="f1" value="mas8">
+                            <label>Más de 8</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-text">F2. ¿Qué formato de aprendizaje prefieres? <span class="required">*</span></label>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="f2" value="cursos" required>
+                            <label>Cursos online</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="f2" value="lectura">
+                            <label>Lectura guiada</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="f2" value="taller">
+                            <label>Taller práctico</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="f2" value="mentoria">
+                            <label>Mentoría</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="f2" value="microlearning">
+                            <label>Microlearning</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="error-message" id="errorMessage">Por favor completa todas las preguntas marcadas con *</p>
+            
+            <button type="submit" class="submit-btn">Generar Diagnóstico</button>
+        </form>
+        
+        <!-- RESULTADOS -->
+        <div class="results-container" id="results">
+            <div class="results-section">
+                <div class="results-title">Tu Diagnóstico Profesional</div>
+                
+                <!-- Perfil -->
+                <div class="section-title">Perfil Profesional</div>
+                <div id="profileSection"></div>
+                
+                <!-- FODA -->
+                <div class="section-title">Análisis FODA</div>
+                <div id="fodaSection"></div>
+                
+                <!-- Plan de Capacitación -->
+                <div class="section-title">Plan de Capacitación Recomendado</div>
+                <div id="planSection"></div>
+                
+                <!-- Recomendaciones Prioritarias -->
+                <div class="section-title">Recomendaciones Prioritarias</div>
+                <div id="recommendationsSection"></div>
+            </div>
+            
+            <button class="print-btn" onclick="window.print()">Imprimir Resultados</button>
+            <button class="submit-btn" onclick="location.reload()">Realizar Nuevo Test</button>
+        </div>
+    </div>
+    
+    <script>
+        // Enviar altura del contenido al padre (Hotmart)
+        function sendHeight() {
+            const height = document.documentElement.scrollHeight;
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({ height: height, type: 'resize' }, '*');
+            }
+        }
+        
+        // Llamar sendHeight al cargar y cuando cambie el contenido
+        window.addEventListener('load', sendHeight);
+        
+        document.getElementById('diagnosticForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validar que todos los campos requeridos estén completos
+            const form = e.target;
+            if (!form.checkValidity()) {
+                document.getElementById('errorMessage').style.display = 'block';
+                form.reportValidity();
+                return;
+            }
+            
+            // Recopilar datos
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            // Calcular promedios
+            const avgC = (parseInt(data.c1) + parseInt(data.c2) + parseInt(data.c3) + 
+                         parseInt(data.c4) + parseInt(data.c5)) / 5;
+            const avgD = (parseInt(data.d1) + parseInt(data.d2) + parseInt(data.d3) + 
+                         parseInt(data.d4) + parseInt(data.d5) + parseInt(data.d6) + 
+                         parseInt(data.d7)) / 7;
+            
+            // Generar resultados
+            generateResults(data, avgC, avgD);
+            
+            // Mostrar resultados y ocultar formulario
+            document.getElementById('diagnosticForm').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            window.scrollTo(0, 0);
+            
+            // Actualizar altura después de mostrar resultados
+            setTimeout(sendHeight, 100);
+        });
+        
+        function generateResults(data, avgC, avgD) {
+            // PERFIL
+            let profile = `<div class="result-item">`;
+            profile += `<p><strong>Situación laboral:</strong> ${getLabelA1(data.a1)}</p>`;
+            profile += `<p><strong>Rol:</strong> ${data.a2}</p>`;
+            profile += `<p><strong>Industria:</strong> ${getLabelA3(data.a3)}</p>`;
+            profile += `<p><strong>Modalidad:</strong> ${getLabelA4(data.a4)}</p>`;
+            profile += `<p><strong>Experiencia:</strong> ${data.a5} años</p>`;
+            profile += `<p><strong>Objetivo principal:</strong> ${getLabelB1(data.b1)}</p>`;
+            profile += `</div>`;
+            document.getElementById('profileSection').innerHTML = profile;
+            
+            // FODA
+            let foda = generateFODA(data, avgC, avgD);
+            document.getElementById('fodaSection').innerHTML = foda;
+            
+            // PLAN DE CAPACITACIÓN
+            let plan = generatePlan(data, avgC, avgD);
+            document.getElementById('planSection').innerHTML = plan;
+            
+            // RECOMENDACIONES
+            let recommendations = generateRecommendations(data, avgC, avgD);
+            document.getElementById('recommendationsSection').innerHTML = recommendations;
+            
+            // Actualizar altura
+            setTimeout(sendHeight, 100);
+        }
+        
+        function generateFODA(data, avgC, avgD) {
+            let html = '';
+            
+            // FORTALEZAS
+            html += '<div class="result-item strength"><strong>Fortalezas:</strong><ul>';
+            let strengths = [];
+            
+            if (parseInt(data.c1) >= 4) strengths.push('Excelente dominio de herramientas técnicas de tu rol');
+            if (parseInt(data.c2) >= 4) strengths.push('Alta capacidad de organización y ejecución de procesos');
+            if (parseInt(data.c3) >= 4) strengths.push('Sólida gestión de proyectos y entregables');
+            if (parseInt(data.c4) >= 4) strengths.push('Capacidad destacada de análisis para toma de decisiones');
+            if (parseInt(data.c5) >= 4) strengths.push('Gran facilidad para aprender nuevas herramientas');
+            if (parseInt(data.d1) >= 4) strengths.push('Comunicación clara y asertiva bien desarrollada');
+            if (parseInt(data.d2) >= 4) strengths.push('Excelente gestión del tiempo y prioridades');
+            if (parseInt(data.d3) >= 4) strengths.push('Alto manejo del estrés y presión laboral');
+            if (parseInt(data.d4) >= 4) strengths.push('Receptividad al feedback y capacidad de ajuste');
+            if (parseInt(data.d5) >= 4) strengths.push('Fuerte habilidad de colaboración y trabajo en equipo');
+            if (parseInt(data.d6) >= 4) strengths.push('Autonomía y autoliderazgo bien consolidados');
+            if (parseInt(data.d7) >= 4) strengths.push('Pensamiento crítico y resolución de problemas sobresalientes');
+            
+            if (strengths.length === 0) {
+                strengths.push('Apertura al desarrollo profesional y autoconocimiento');
+            }
+            
+            strengths.forEach(s => html += `<li>${s}</li>`);
+            html += '</ul></div>';
+            
+            // DEBILIDADES
+            html += '<div class="result-item critical"><strong>Debilidades:</strong><ul>';
+            let weaknesses = [];
+            
+            if (parseInt(data.c1) <= 2) weaknesses.push('Brecha crítica en dominio de herramientas técnicas');
+            if (parseInt(data.c2) <= 2) weaknesses.push('Dificultad significativa en organización de procesos');
+            if (parseInt(data.c3) <= 2) weaknesses.push('Limitaciones importantes en gestión de proyectos');
+            if (parseInt(data.c4) <= 2) weaknesses.push('Análisis de información para decisiones requiere desarrollo urgente');
+            if (parseInt(data.c5) <= 2) weaknesses.push('Dificultad para adoptar nuevas herramientas');
+            if (parseInt(data.d1) <= 2) weaknesses.push('Comunicación asertiva necesita fortalecimiento urgente');
+            if (parseInt(data.d2) <= 2) weaknesses.push('Gestión del tiempo y prioridades es una brecha crítica');
+            if (parseInt(data.d3) <= 2) weaknesses.push('Manejo del estrés requiere atención inmediata');
+            if (parseInt(data.d4) <= 2) weaknesses.push('Receptividad al feedback necesita desarrollo');
+            if (parseInt(data.d5) <= 2) weaknesses.push('Colaboración con otros representa un desafío importante');
+            if (parseInt(data.d6) <= 2) weaknesses.push('Autonomía y autoliderazgo son áreas críticas');
+            if (parseInt(data.d7) <= 2) weaknesses.push('Pensamiento crítico requiere fortalecimiento significativo');
+            
+            if (data.e1 === 'frecuentemente') weaknesses.push('Retrabajo frecuente por falta de claridad o errores evitables');
+            if (data.e2 === 'si') weaknesses.push('Dificultad para establecer límites y renegociar prioridades');
+            if (data.e3 === 'si') weaknesses.push('Desalineación entre esfuerzo y prioridades estratégicas');
+            if (data.e4 === 'si') weaknesses.push('Evitación de conversaciones difíciles');
+            
+            if (weaknesses.length === 0) {
+                weaknesses.push('No se identificaron debilidades críticas en este diagnóstico');
+            }
+            
+            weaknesses.forEach(w => html += `<li>${w}</li>`);
+            html += '</ul></div>';
+            
+            // OPORTUNIDADES
+            html += '<div class="result-item"><strong>Oportunidades:</strong><ul>';
+            let opportunities = [];
+            
+            if (data.b1 === 'ascender') opportunities.push('Posibilidad de asumir roles de liderazgo en el corto plazo');
+            if (data.b1 === 'cambiar_rol') opportunities.push('Transición hacia un rol más alineado con tus intereses');
+            if (data.b1 === 'cambiar_industria') opportunities.push('Reinvención profesional en una nueva industria');
+            if (data.b1 === 'ingresos') opportunities.push('Mejora de empleabilidad y potencial de ingresos');
+            if (data.b1 === 'marca') opportunities.push('Consolidación de tu marca personal y visibilidad profesional');
+            
+            if (data.a3 === 'tecnologia') opportunities.push('Sector con alta demanda y oportunidades de crecimiento');
+            if (data.a4 === 'remoto') opportunities.push('Acceso a oportunidades globales por modalidad remota');
+            if (data.a5 === '0-2') opportunities.push('Etapa ideal para construir bases sólidas de tu carrera');
+            if (data.a5 === '10+') opportunities.push('Experiencia amplia que puede apalancarse hacia mentoría o liderazgo');
+            
+            opportunities.push('Capacitación personalizada para cerrar brechas específicas');
+            
+            opportunities.forEach(o => html += `<li>${o}</li>`);
+            html += '</ul></div>';
+            
+            // AMENAZAS
+            html += '<div class="result-item warning"><strong>Amenazas:</strong><ul>';
+            let threats = [];
+            
+            if (avgC <= 2.5 && avgD <= 2.5) {
+                threats.push('Brechas técnicas y blandas simultáneas pueden limitar progreso profesional');
+            }
+            if (avgC <= 2) threats.push('Brecha técnica crítica puede afectar competitividad en el mercado');
+            if (avgD <= 2) threats.push('Habilidades blandas insuficientes pueden limitar crecimiento profesional');
+            if (data.e3 === 'si') threats.push('Riesgo de agotamiento por trabajo no alineado a prioridades');
+            if (data.e2 === 'si') threats.push('Sobrecarga laboral por dificultad para establecer límites');
+            if (data.f1 === 'menos2') threats.push('Tiempo limitado para capacitación puede ralentizar desarrollo');
+            
+            if (data.a1 === 'transicion') {
+                threats.push('Período de transición requiere claridad estratégica para evitar estancamiento');
+            }
+            
+            if (threats.length === 0) {
+                threats.push('No se identificaron amenazas críticas en este momento');
+            }
+            
+            threats.forEach(t => html += `<li>${t}</li>`);
+            html += '</ul></div>';
+            
+            return html;
+        }
+        
+        function generatePlan(data, avgC, avgD) {
+            let html = '';
+            let courses = [];
+            
+            // Cursos técnicos
+            if (avgC <= 3) {
+                html += '<div class="result-item critical"><strong>Área Técnica (Prioridad Alta):</strong><ul>';
+                
+                if (parseInt(data.c1) <= 2) courses.push('Curso de herramientas técnicas específicas de tu rol');
+                else if (parseInt(data.c1) === 3) courses.push('Actualización en herramientas técnicas del sector');
+                
+                if (parseInt(data.c2) <= 2) courses.push('Curso de organización y gestión de procesos');
+                else if (parseInt(data.c2) === 3) courses.push('Metodologías ágiles y optimización de procesos');
+                
+                if (parseInt(data.c3) <= 2) courses.push('Curso de gestión de proyectos básico');
+                else if (parseInt(data.c3) === 3) courses.push('Certificación en gestión de proyectos (PMI o similar)');
+                
+                if (parseInt(data.c4) <= 2) courses.push('Curso de análisis de datos y toma de decisiones');
+                else if (parseInt(data.c4) === 3) courses.push('Business Intelligence y análisis estratégico');
+                
+                if (parseInt(data.c5) <= 2) courses.push('Curso de actualización tecnológica continua');
+                
+                courses.forEach(c => html += `<li>${c}</li>`);
+                html += '</ul></div>';
+            }
+            
+            // Cursos de habilidades blandas
+            courses = [];
+            if (avgD <= 2) {
+                html += '<div class="result-item critical"><strong>Habilidades Blandas (Prioridad Crítica):</strong><ul>';
+                
+                if (parseInt(data.d1) <= 2 || data.e4 === 'si') {
+                    courses.push('Curso de comunicación asertiva y conversaciones difíciles');
+                }
+                if (parseInt(data.d2) <= 2 || data.e3 === 'si' || data.e2 === 'si') {
+                    courses.push('Curso de gestión del tiempo y prioridades estratégicas');
+                }
+                if (parseInt(data.d3) <= 2) {
+                    courses.push('Curso de manejo del estrés y resiliencia profesional');
+                }
+                if (parseInt(data.d4) <= 2) {
+                    courses.push('Taller de feedback constructivo y mejora continua');
+                }
+                if (parseInt(data.d5) <= 2) {
+                    courses.push('Curso de trabajo en equipo y colaboración efectiva');
+                }
+                if (parseInt(data.d6) <= 2) {
+                    courses.push('Curso de autoliderazgo y gestión personal');
+                }
+                if (parseInt(data.d7) <= 2) {
+                    courses.push('Curso de pensamiento crítico y resolución de problemas');
+                }
+                
+                if (data.e1 === 'frecuentemente') {
+                    courses.push('Taller de atención al detalle y prevención de errores');
+                }
+                
+                courses.forEach(c => html += `<li>${c}</li>`);
+                html += '</ul></div>';
+            } else if (avgD <= 3) {
+                html += '<div class="result-item warning"><strong>Habilidades Blandas (Prioridad Media):</strong><ul>';
+                
+                if (parseInt(data.d1) === 3) courses.push('Taller de comunicación efectiva avanzada');
+                if (parseInt(data.d2) === 3) courses.push('Taller de productividad y priorización');
+                if (parseInt(data.d3) === 3) courses.push('Taller de gestión emocional');
+                if (parseInt(data.d6) === 3) courses.push('Taller de liderazgo personal');
+                if (parseInt(data.d7) === 3) courses.push('Taller de análisis y solución de problemas complejos');
+                
+                courses.forEach(c => html += `<li>${c}</li>`);
+                html += '</ul></div>';
+            }
+            
+            // Formato y tiempo
+            html += '<div class="result-item"><strong>Formato recomendado:</strong> ';
+            html += getLabelF2(data.f2);
+            html += '<br><strong>Tiempo disponible:</strong> ';
+            html += getLabelF1(data.f1);
+            html += ' horas semanales</div>';
+            
+            // Recomendación según objetivo
+            html += '<div class="result-item"><strong>Enfoque según tu objetivo:</strong><br>';
+            if (data.b1 === 'ascender') {
+                html += 'Prioriza liderazgo, comunicación y gestión de equipos.';
+            } else if (data.b1 === 'mejorar') {
+                html += 'Enfócate en habilidades técnicas y eficiencia operativa.';
+            } else if (data.b1 === 'cambiar_rol' || data.b1 === 'cambiar_industria') {
+                html += 'Desarrolla competencias transferibles y amplía tu red de contactos.';
+            } else if (data.b1 === 'ingresos') {
+                html += 'Fortalece habilidades de alto valor y especialización técnica.';
+            } else if (data.b1 === 'marca') {
+                html += 'Combina desarrollo técnico con comunicación y visibilidad profesional.';
+            }
+            html += '</div>';
+            
+            return html;
+        }
+        
+        function generateRecommendations(data, avgC, avgD) {
+            let html = '';
+            let recommendations = [];
+            
+            // Recomendaciones críticas
+            if (avgD <= 2 || avgC <= 2) {
+                html += '<div class="result-item critical"><strong>Acción Inmediata:</strong><ul>';
+                
+                if (avgD <= 2) {
+                    recommendations.push('Iniciar formación en habilidades blandas es tu prioridad número 1');
+                }
+                if (avgC <= 2) {
+                    recommendations.push('Reforzar competencias técnicas para mantener competitividad profesional');
+                }
+                if (data.e2 === 'si') {
+                    recommendations.push('Aprender a establecer límites claros y comunicar expectativas');
+                }
+                if (data.e3 === 'si') {
+                    recommendations.push('Implementar sistema de priorización basado en impacto');
+                }
+                if (data.e1 === 'frecuentemente') {
+                    recommendations.push('Desarrollar checklist y procesos de validación antes de entregar');
+                }
+                
+                recommendations.forEach(r => html += `<li>${r}</li>`);
+                html += '</ul></div>';
+            }
+            
+            // Recomendaciones generales
+            recommendations = [];
+            html += '<div class="result-item"><strong>Próximos Pasos:</strong><ul>';
+            
+            recommendations.push('Selecciona 2-3 áreas de desarrollo prioritarias según tu objetivo');
+            recommendations.push('Establece metas específicas y medibles para cada área');
+            recommendations.push('Dedica tiempo semanal consistente a tu capacitación');
+            
+            if (data.f1 === 'menos2') {
+                recommendations.push('Considera microlearning o formatos flexibles dada tu disponibilidad limitada');
+            }
+            
+            if (data.b1 === 'ascender') {
+                recommendations.push('Busca oportunidades de liderazgo informal en tu rol actual');
+            }
+            
+            recommendations.push('Solicita feedback regular para validar tu progreso');
+            recommendations.push('Documenta tus logros y aprendizajes para actualizar tu perfil profesional');
+            
+            recommendations.forEach(r => html += `<li>${r}</li>`);
+            html += '</ul></div>';
+            
+            // Mensaje final
+            html += '<div class="result-item strength"><strong>Mensaje Final:</strong><br>';
+            html += 'Este diagnóstico es tu punto de partida. El desarrollo profesional es un proceso continuo que requiere compromiso y acción consistente. Prioriza las áreas críticas, celebra tus fortalezas y mantén una mentalidad de crecimiento. ¡Tienes todo lo necesario para avanzar hacia tus objetivos!';
+            html += '</div>';
+            
+            return html;
+        }
+        
+        // Funciones auxiliares para etiquetas
+        function getLabelA1(value) {
+            const labels = {
+                'empleado': 'Empleado/a',
+                'freelancer': 'Freelancer / independiente',
+                'emprendedor': 'Emprendedor/a',
+                'transicion': 'En transición laboral'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelA3(value) {
+            const labels = {
+                'educacion': 'Educación',
+                'servicios': 'Servicios profesionales',
+                'tecnologia': 'Tecnología',
+                'ventas': 'Ventas / Comercial',
+                'salud': 'Salud',
+                'administracion': 'Administración / Operaciones',
+                'otra': 'Otra'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelA4(value) {
+            const labels = {
+                'remoto': 'Remoto',
+                'presencial': 'Presencial',
+                'hibrido': 'Híbrido'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelB1(value) {
+            const labels = {
+                'mejorar': 'Mejorar desempeño en rol actual',
+                'ascender': 'Ascender o asumir liderazgo',
+                'cambiar_rol': 'Cambiar de rol',
+                'cambiar_industria': 'Cambiar de industria',
+                'ingresos': 'Aumentar ingresos / empleabilidad',
+                'marca': 'Consolidar marca profesional'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelF1(value) {
+            const labels = {
+                'menos2': 'Menos de 2',
+                '2-4': '2-4',
+                '5-8': '5-8',
+                'mas8': 'Más de 8'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelF2(value) {
+            const labels = {
+                'cursos': 'Cursos online',
+                'lectura': 'Lectura guiada',
+                'taller': 'Taller práctico',
+                'mentoria': 'Mentoría',
+                'microlearning': 'Microlearning'
+            };
+            return labels[value] || value;
+        }
+        
+        // Observar cambios en el DOM para actualizar altura
+        const observer = new MutationObserver(sendHeight);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true
+        });
+    </script>
+</body>
+</html>
