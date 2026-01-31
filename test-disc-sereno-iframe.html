@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test DISC de Personalidad - LideraVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 50%, #B0E0E6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .institutional-header {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(135, 206, 235, 0.3);
+        }
+        
+        .institutional-header .brand {
+            font-size: 12px;
+            font-weight: 500;
+            color: #5A8AAA;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #2C5F7F;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            font-weight: 400;
+            color: #5A8AAA;
+            margin-bottom: 25px;
+        }
+        
+        .progress-container {
+            margin-bottom: 35px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 400;
+            color: #5A8AAA;
+            margin-bottom: 12px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(87, 206, 235, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #5A8AAA, #87CEEB);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+        
+        .instructions {
+            background: rgba(135, 206, 235, 0.15);
+            border-left: 3px solid #87CEEB;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        .instructions h2 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2C5F7F;
+            margin-bottom: 12px;
+        }
+        
+        .instructions p {
+            font-size: 14px;
+            font-weight: 300;
+            color: #4A7A9A;
+            margin-bottom: 8px;
+        }
+        
+        .question-instruction {
+            background: rgba(135, 206, 235, 0.15);
+            border-left: 3px solid #87CEEB;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .question-instruction p {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2C5F7F;
+            margin: 0;
+        }
+        
+        .question-container {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .question-container.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .question-number {
+            font-size: 13px;
+            font-weight: 500;
+            color: #87CEEB;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        .word-list {
+            margin-bottom: 30px;
+        }
+        
+        .word-item {
+            background: #ffffff;
+            border: 2px solid rgba(135, 206, 235, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .word-item:hover {
+            border-color: #87CEEB;
+            box-shadow: 0 4px 12px rgba(135, 206, 235, 0.2);
+        }
+        
+        .word-text {
+            font-size: 18px;
+            font-weight: 400;
+            color: #2C5F7F;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .selection-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .select-btn {
+            flex: 1;
+            max-width: 150px;
+            padding: 12px 24px;
+            border: 2px solid #B0E0E6;
+            background: #ffffff;
+            color: #5A8AAA;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .select-btn:hover {
+            border-color: #87CEEB;
+            background: rgba(135, 206, 235, 0.1);
+        }
+        
+        .select-btn.selected-most {
+            background: linear-gradient(135deg, #5A8AAA, #87CEEB);
+            color: #ffffff;
+            border-color: #5A8AAA;
+        }
+        
+        .select-btn.selected-least {
+            background: linear-gradient(135deg, #B0E0E6, #E0F6FF);
+            color: #4A7A9A;
+            border-color: #B0E0E6;
+        }
+        
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .nav-btn.prev {
+            background: rgba(135, 206, 235, 0.2);
+            color: #5A8AAA;
+        }
+        
+        .nav-btn.prev:hover {
+            background: rgba(135, 206, 235, 0.35);
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(135deg, #5A8AAA, #87CEEB);
+            color: #ffffff;
+        }
+        
+        .nav-btn.next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(87, 206, 235, 0.3);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .error-message {
+            background: rgba(255, 150, 150, 0.15);
+            border-left: 3px solid #ff9696;
+            padding: 12px 16px;
+            margin-top: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #d64545;
+            display: none;
+        }
+        
+        .results-container {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        
+        .results-title {
+            font-size: 28px;
+            font-weight: 300;
+            color: #2C5F7F;
+            margin-bottom: 10px;
+        }
+        
+        .profile-main {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(135, 206, 235, 0.15), rgba(176, 224, 230, 0.15));
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(135, 206, 235, 0.3);
+        }
+        
+        .profile-letter {
+            font-size: 80px;
+            font-weight: 300;
+            color: #2C5F7F;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .profile-name {
+            font-size: 26px;
+            font-weight: 400;
+            color: #5A8AAA;
+            margin-bottom: 12px;
+        }
+        
+        .profile-tagline {
+            font-size: 16px;
+            font-weight: 300;
+            color: #4A7A9A;
+            font-style: italic;
+        }
+        
+        .scores-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .score-box {
+            background: #ffffff;
+            border: 2px solid rgba(135, 206, 235, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .score-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #5A8AAA;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .score-bar {
+            height: 8px;
+            background: rgba(135, 206, 235, 0.2);
+            border-radius: 10px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #5A8AAA, #87CEEB);
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+        
+        .score-percentage {
+            font-size: 22px;
+            font-weight: 400;
+            color: #2C5F7F;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: #2C5F7F;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(135, 206, 235, 0.3);
+        }
+        
+        .content-box {
+            background: #ffffff;
+            border: 2px solid rgba(135, 206, 235, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .content-box p {
+            font-size: 15px;
+            font-weight: 300;
+            color: #4A7A9A;
+            line-height: 1.7;
+        }
+        
+        .content-box ul {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+        
+        .content-box li {
+            font-size: 14px;
+            font-weight: 300;
+            color: #4A7A9A;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .action-btn {
+            padding: 14px 28px;
+            border: 2px solid #87CEEB;
+            background: linear-gradient(135deg, #5A8AAA, #87CEEB);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(87, 206, 235, 0.3);
+        }
+        
+        @media print {
+            body {
+                background: #ffffff;
+            }
+            .action-buttons, .navigation {
+                display: none;
+            }
+            .institutional-header {
+                display: block !important;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .scores-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .selection-buttons {
+                flex-direction: column;
+            }
+            
+            .select-btn {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- ENCABEZADO INSTITUCIONAL -->
+            <div class="institutional-header">
+                <div class="brand">LideraVE | Maria Müller Noria | Capacitación Laboral 100% online</div>
+            </div>
+            
+            <!-- INICIO -->
+            <div id="welcomeScreen">
+                <div class="header">
+                    <h1>Test DISC de Personalidad</h1>
+                    <p class="subtitle">Descubre tu estilo de comportamiento</p>
+                </div>
+                
+                <div class="instructions">
+                    <h2>Bienvenido al Test DISC</h2>
+                    <p>Este test te ayudará a identificar tu estilo de personalidad dominante y cómo te relacionas con otros.</p>
+                    <p><strong>Instrucciones:</strong></p>
+                    <p>• Verás 24 grupos de 4 palabras</p>
+                    <p>• Para cada grupo, <strong>selecciona solo 2 palabras</strong>: una que MÁS te describe y una que MENOS te describe</p>
+                    <p>• Responde según cómo eres naturalmente, no cómo crees que deberías ser</p>
+                    <p>• Tómate tu tiempo y responde con honestidad</p>
+                </div>
+                
+                <button class="nav-btn next" onclick="startTest()" style="width: 100%;">
+                    Comenzar Test
+                </button>
+            </div>
+            
+            <!-- PREGUNTAS -->
+            <div id="questionsArea" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-text" id="progressText">Pregunta 1 de 24</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 4.17%"></div>
+                    </div>
+                </div>
+                
+                <div id="questionsContainer"></div>
+                
+                <p class="error-message" id="errorMessage">Por favor selecciona MÁS y MENOS para completar esta pregunta antes de continuar</p>
+                
+                <div class="navigation">
+                    <button class="nav-btn prev" id="prevBtn" onclick="previousQuestion()">
+                        Anterior
+                    </button>
+                    <button class="nav-btn next" id="nextBtn" onclick="nextQuestion()">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+            
+            <!-- RESULTADOS -->
+            <div class="results-container" id="results">
+                <div class="results-header">
+                    <h1 class="results-title">Tu Perfil DISC</h1>
+                </div>
+                
+                <div class="profile-main" id="profileMain"></div>
+                
+                <div class="section-title">Puntuaciones por Estilo</div>
+                <div class="scores-grid" id="scoresGrid"></div>
+                
+                <div class="section-title">Descripción de Tu Perfil</div>
+                <div class="content-box" id="descriptionBox"></div>
+                
+                <div class="section-title">Fortalezas Profesionales</div>
+                <div class="content-box" id="strengthsBox"></div>
+                
+                <div class="section-title">Áreas de Desarrollo</div>
+                <div class="content-box" id="developmentBox"></div>
+                
+                <div class="section-title">Recomendaciones Profesionales</div>
+                <div class="content-box" id="recommendationsBox"></div>
+                
+                <div class="section-title">Comunicación y Trabajo en Equipo</div>
+                <div class="content-box" id="communicationBox"></div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="window.print()">Imprimir Resultados</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Enviar altura del contenido al padre (para iframe)
+        function sendHeight() {
+            const height = document.documentElement.scrollHeight;
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({ height: height, type: 'resize' }, '*');
+            }
+        }
+        
+        window.addEventListener('load', sendHeight);
+        
+        // Banco de preguntas DISC
+        const questions = [
+            { words: ["Dominante", "Influyente", "Estable", "Cauteloso"], types: ["D", "I", "S", "C"] },
+            { words: ["Decidido", "Entusiasta", "Paciente", "Preciso"], types: ["D", "I", "S", "C"] },
+            { words: ["Competitivo", "Sociable", "Leal", "Analítico"], types: ["D", "I", "S", "C"] },
+            { words: ["Directo", "Expresivo", "Diplomático", "Sistemático"], types: ["D", "I", "S", "C"] },
+            { words: ["Atrevido", "Persuasivo", "Cooperativo", "Cuidadoso"], types: ["D", "I", "S", "C"] },
+            { words: ["Exigente", "Optimista", "Tranquilo", "Riguroso"], types: ["D", "I", "S", "C"] },
+            { words: ["Firme", "Animado", "Servicial", "Ordenado"], types: ["D", "I", "S", "C"] },
+            { words: ["Asertivo", "Motivador", "Confiable", "Detallista"], types: ["D", "I", "S", "C"] },
+            { words: ["Arriesgado", "Carismático", "Tolerante", "Metódico"], types: ["D", "I", "S", "C"] },
+            { words: ["Ambicioso", "Comunicativo", "Moderado", "Disciplinado"], types: ["D", "I", "S", "C"] },
+            { words: ["Independiente", "Espontáneo", "Pacífico", "Reflexivo"], types: ["D", "I", "S", "C"] },
+            { words: ["Emprendedor", "Inspirador", "Sensible", "Consciente"], types: ["D", "I", "S", "C"] },
+            { words: ["Retador", "Popular", "Comprensivo", "Perfeccionista"], types: ["D", "I", "S", "C"] },
+            { words: ["Enérgico", "Alegre", "Considerado", "Lógico"], types: ["D", "I", "S", "C"] },
+            { words: ["Pionero", "Extrovertido", "Amable", "Conservador"], types: ["D", "I", "S", "C"] },
+            { words: ["Contundente", "Apasionado", "Ecuánime", "Objetivo"], types: ["D", "I", "S", "C"] },
+            { words: ["Rápido", "Conversador", "Constante", "Exacto"], types: ["D", "I", "S", "C"] },
+            { words: ["Impaciente", "Impulsivo", "Predecible", "Cauteloso"], types: ["D", "I", "S", "C"] },
+            { words: ["Audaz", "Vivaz", "Relajado", "Planificador"], types: ["D", "I", "S", "C"] },
+            { words: ["Autoritario", "Encantador", "Humilde", "Estructurado"], types: ["D", "I", "S", "C"] },
+            { words: ["Intenso", "Cálido", "Quieto", "Reservado"], types: ["D", "I", "S", "C"] },
+            { words: ["Aventurero", "Interactivo", "Protector", "Prudente"], types: ["D", "I", "S", "C"] },
+            { words: ["Controlador", "Entusiasta", "Comprometido", "Calculador"], types: ["D", "I", "S", "C"] },
+            { words: ["Poderoso", "Positivo", "Estable", "Concienzudo"], types: ["D", "I", "S", "C"] }
+        ];
+        
+        let currentQuestion = 0;
+        const selections = {};
+        
+        function startTest() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('questionsArea').style.display = 'block';
+            generateQuestions();
+            showQuestion(0);
+            setTimeout(sendHeight, 100);
+        }
+        
+        function generateQuestions() {
+            const container = document.getElementById('questionsContainer');
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${qIndex}`;
+                
+                let html = `<div class="question-number">Grupo ${qIndex + 1} de ${questions.length}</div>`;
+                
+                // Instrucción clara
+                html += `<div class="question-instruction">
+                    <p>📌 Selecciona solo <strong>2 respuestas</strong>: una que MÁS te describe y una que MENOS te describe</p>
+                </div>`;
+                
+                html += `<div class="word-list">`;
+                
+                q.words.forEach((word, wIndex) => {
+                    html += `
+                        <div class="word-item">
+                            <div class="word-text">${word}</div>
+                            <div class="selection-buttons">
+                                <button type="button" class="select-btn" 
+                                    data-question="${qIndex}" 
+                                    data-word="${wIndex}" 
+                                    data-selection="most"
+                                    onclick="handleSelection(${qIndex}, ${wIndex}, 'most')">
+                                    MÁS me describe
+                                </button>
+                                <button type="button" class="select-btn" 
+                                    data-question="${qIndex}" 
+                                    data-word="${wIndex}" 
+                                    data-selection="least"
+                                    onclick="handleSelection(${qIndex}, ${wIndex}, 'least')">
+                                    MENOS me describe
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += `</div>`;
+                questionDiv.innerHTML = html;
+                container.appendChild(questionDiv);
+            });
+        }
+        
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateProgress();
+            updateNavButtons();
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            setTimeout(sendHeight, 100);
+        }
+        
+        function updateProgress() {
+            const percentage = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+        }
+        
+        function updateNavButtons() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Ver Resultados';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+        
+        function handleSelection(qIndex, wIndex, selection) {
+            if (!selections[qIndex]) {
+                selections[qIndex] = { most: null, least: null };
+            }
+            
+            const btn = document.querySelector(
+                `.select-btn[data-question="${qIndex}"][data-word="${wIndex}"][data-selection="${selection}"]`
+            );
+            
+            // Si ya está seleccionado, deseleccionar
+            if (selections[qIndex][selection] === wIndex) {
+                selections[qIndex][selection] = null;
+                btn.classList.remove(`selected-${selection}`);
+                return;
+            }
+            
+            // Deseleccionar el anterior
+            if (selections[qIndex][selection] !== null) {
+                const prevBtn = document.querySelector(
+                    `.select-btn[data-question="${qIndex}"][data-word="${selections[qIndex][selection]}"][data-selection="${selection}"]`
+                );
+                if (prevBtn) {
+                    prevBtn.classList.remove(`selected-${selection}`);
+                }
+            }
+            
+            // Seleccionar el nuevo
+            selections[qIndex][selection] = wIndex;
+            btn.classList.add(`selected-${selection}`);
+        }
+        
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+                window.scrollTo(0, 0);
+            }
+        }
+        
+        function nextQuestion() {
+            // Validar que la pregunta actual esté completa
+            if (!isQuestionComplete(currentQuestion)) {
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                showQuestion(currentQuestion + 1);
+                window.scrollTo(0, 0);
+            } else {
+                // Última pregunta - mostrar resultados
+                calculateAndShowResults();
+            }
+        }
+        
+        function isQuestionComplete(qIndex) {
+            if (!selections[qIndex]) return false;
+            if (selections[qIndex].most === null || selections[qIndex].least === null) return false;
+            if (selections[qIndex].most === selections[qIndex].least) return false;
+            return true;
+        }
+        
+        function calculateAndShowResults() {
+            // Validar todas las preguntas
+            for (let i = 0; i < questions.length; i++) {
+                if (!isQuestionComplete(i)) {
+                    showQuestion(i);
+                    document.getElementById('errorMessage').style.display = 'block';
+                    return;
+                }
+            }
+            
+            const scores = calculateScores();
+            generateResults(scores);
+            
+            document.getElementById('questionsArea').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            window.scrollTo(0, 0);
+            setTimeout(sendHeight, 100);
+        }
+        
+        function calculateScores() {
+            const scores = { D: 0, I: 0, S: 0, C: 0 };
+            
+            questions.forEach((q, qIndex) => {
+                const mostIdx = selections[qIndex].most;
+                const leastIdx = selections[qIndex].least;
+                
+                scores[q.types[mostIdx]] += 2;
+                scores[q.types[leastIdx]] -= 1;
+            });
+            
+            // Normalizar a positivos
+            const minScore = Math.min(scores.D, scores.I, scores.S, scores.C);
+            if (minScore < 0) {
+                scores.D -= minScore;
+                scores.I -= minScore;
+                scores.S -= minScore;
+                scores.C -= minScore;
+            }
+            
+            const total = scores.D + scores.I + scores.S + scores.C;
+            const percentages = {
+                D: Math.round((scores.D / total) * 100),
+                I: Math.round((scores.I / total) * 100),
+                S: Math.round((scores.S / total) * 100),
+                C: Math.round((scores.C / total) * 100)
+            };
+            
+            return { scores, percentages, total };
+        }
+        
+        function generateResults(data) {
+            const { percentages } = data;
+            
+            let maxType = 'D';
+            let maxValue = percentages.D;
+            
+            if (percentages.I > maxValue) {
+                maxType = 'I';
+                maxValue = percentages.I;
+            }
+            if (percentages.S > maxValue) {
+                maxType = 'S';
+                maxValue = percentages.S;
+            }
+            if (percentages.C > maxValue) {
+                maxType = 'C';
+                maxValue = percentages.C;
+            }
+            
+            const profileData = getProfileData(maxType);
+            document.getElementById('profileMain').innerHTML = `
+                <div class="profile-letter">${maxType}</div>
+                <div class="profile-name">${profileData.name}</div>
+                <div class="profile-tagline">${profileData.tagline}</div>
+            `;
+            
+            const scoresHTML = `
+                <div class="score-box">
+                    <div class="score-label">D - Dominancia</div>
+                    <div class="score-bar"><div class="score-fill" style="width: ${percentages.D}%"></div></div>
+                    <div class="score-percentage">${percentages.D}%</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">I - Influencia</div>
+                    <div class="score-bar"><div class="score-fill" style="width: ${percentages.I}%"></div></div>
+                    <div class="score-percentage">${percentages.I}%</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">S - Estabilidad</div>
+                    <div class="score-bar"><div class="score-fill" style="width: ${percentages.S}%"></div></div>
+                    <div class="score-percentage">${percentages.S}%</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">C - Cumplimiento</div>
+                    <div class="score-bar"><div class="score-fill" style="width: ${percentages.C}%"></div></div>
+                    <div class="score-percentage">${percentages.C}%</div>
+                </div>
+            `;
+            document.getElementById('scoresGrid').innerHTML = scoresHTML;
+            
+            document.getElementById('descriptionBox').innerHTML = `<p>${profileData.description}</p>`;
+            
+            let strengthsHTML = '<ul>';
+            profileData.strengths.forEach(s => strengthsHTML += `<li>${s}</li>`);
+            strengthsHTML += '</ul>';
+            document.getElementById('strengthsBox').innerHTML = strengthsHTML;
+            
+            let developmentHTML = '<ul>';
+            profileData.development.forEach(d => developmentHTML += `<li>${d}</li>`);
+            developmentHTML += '</ul>';
+            document.getElementById('developmentBox').innerHTML = developmentHTML;
+            
+            let recsHTML = '<ul>';
+            profileData.recommendations.forEach(r => recsHTML += `<li>${r}</li>`);
+            recsHTML += '</ul>';
+            document.getElementById('recommendationsBox').innerHTML = recsHTML;
+            
+            document.getElementById('communicationBox').innerHTML = `<p>${profileData.communication}</p>`;
+        }
+        
+        function getProfileData(type) {
+            const profiles = {
+                D: {
+                    name: 'Dominancia',
+                    tagline: 'Orientado a resultados y acción directa',
+                    description: 'Eres una persona decidida, directa y orientada a resultados. Te enfocas en resolver problemas rápidamente, aceptas desafíos con confianza y priorizas la eficiencia. Tu estilo es asertivo y buscas tener control sobre tu entorno y las situaciones. Valoras la competencia y te motiva alcanzar metas ambiciosas.',
+                    strengths: [
+                        'Tomas decisiones rápidas y con confianza',
+                        'Aceptas desafíos y te enfrentas a situaciones difíciles',
+                        'Lideras con determinación y claridad',
+                        'Te enfocas en resultados y cumplimiento de objetivos',
+                        'Eres directo y claro en tu comunicación',
+                        'Tienes alta tolerancia al riesgo y presión'
+                    ],
+                    development: [
+                        'Desarrolla mayor paciencia con procesos y personas',
+                        'Escucha activamente antes de decidir',
+                        'Considera el impacto emocional de tus acciones',
+                        'Delega y confía más en tu equipo',
+                        'Suaviza tu comunicación en situaciones sensibles',
+                        'Valora los detalles y la planificación a largo plazo'
+                    ],
+                    recommendations: [
+                        'Roles ideales: Liderazgo ejecutivo, gestión de proyectos complejos, emprendimiento, áreas que requieran toma de decisiones rápidas',
+                        'Busca entornos donde puedas tener autonomía y capacidad de decisión',
+                        'Complementa tu equipo con perfiles S y C que aporten estabilidad y análisis detallado',
+                        'Desarrolla habilidades de coaching para potenciar tu liderazgo',
+                        'Capacítate en inteligencia emocional y manejo de equipos diversos',
+                        'Establece métricas claras de éxito para canalizar tu orientación a resultados'
+                    ],
+                    communication: 'Al trabajar contigo, el equipo debe ser directo, enfocarse en resultados y respetar tu tiempo. Aprecias la eficiencia y valoras cuando presentan soluciones, no solo problemas. Evita rodeos excesivos y sé concreto en tus peticiones.'
+                },
+                I: {
+                    name: 'Influencia',
+                    tagline: 'Entusiasta, sociable y persuasivo',
+                    description: 'Eres una persona extrovertida, optimista y motivadora. Te destaca tu habilidad para conectar con otros, generar entusiasmo y crear un ambiente positivo. Disfrutas del trabajo en equipo, valoras las relaciones interpersonales y tienes facilidad para influir y persuadir. Tu energía y creatividad inspiran a quienes te rodean.',
+                    strengths: [
+                        'Excelente comunicador y constructor de relaciones',
+                        'Generas entusiasmo y motivación en los equipos',
+                        'Alta capacidad de persuasión e influencia',
+                        'Creativo e innovador en la resolución de problemas',
+                        'Optimista y positivo ante los desafíos',
+                        'Facilitas la colaboración y el trabajo en equipo'
+                    ],
+                    development: [
+                        'Mejora tu enfoque y seguimiento de tareas',
+                        'Desarrolla habilidades de organización y planificación',
+                        'Practica la escucha activa sin interrumpir',
+                        'Profundiza en detalles antes de comprometerte',
+                        'Trabaja en dar feedback constructivo de forma directa',
+                        'Equilibra tu optimismo con realismo en proyecciones'
+                    ],
+                    recommendations: [
+                        'Roles ideales: Ventas, relaciones públicas, marketing, capacitación, áreas de atención al cliente',
+                        'Busca ambientes colaborativos y dinámicos donde puedas interactuar constantemente',
+                        'Complementa tu perfil con herramientas de gestión de tiempo y productividad',
+                        'Capacítate en técnicas de presentación y storytelling',
+                        'Desarrolla tu marca personal y presencia en redes profesionales',
+                        'Trabaja con perfiles C o S que complementen tu seguimiento y organización'
+                    ],
+                    communication: 'El equipo se beneficia de tu energía cuando la enfocas en objetivos claros. Aprecia tu apertura pero necesita que también cumplas compromisos. Sé consciente de dar espacio a personas más reservadas y valida ideas con datos cuando sea necesario.'
+                },
+                S: {
+                    name: 'Estabilidad',
+                    tagline: 'Paciente, leal y confiable',
+                    description: 'Eres una persona estable, paciente y confiable. Valoras la armonía, la consistencia y las relaciones de largo plazo. Prefieres entornos predecibles donde puedas trabajar de manera constante. Eres un excelente miembro de equipo, servicial y comprometido. Tu calma y diplomacia ayudan a mantener la cohesión grupal.',
+                    strengths: [
+                        'Alta lealtad y compromiso con el equipo',
+                        'Excelente escucha y apoyo a los demás',
+                        'Mantienes la calma bajo presión',
+                        'Confiable en el cumplimiento de responsabilidades',
+                        'Generas ambientes de trabajo armoniosos',
+                        'Paciente y consistente en tus esfuerzos'
+                    ],
+                    development: [
+                        'Desarrolla mayor comodidad con el cambio y la ambigüedad',
+                        'Practica expresar tus opiniones de forma asertiva',
+                        'Toma más iniciativa en nuevos proyectos',
+                        'Aprende a decir "no" cuando sea necesario',
+                        'Sal de tu zona de confort más frecuentemente',
+                        'Acelera tu ritmo de toma de decisiones cuando se requiera'
+                    ],
+                    recommendations: [
+                        'Roles ideales: Recursos humanos, atención al cliente, administración, coordinación de equipos, roles de soporte',
+                        'Busca organizaciones con cultura estable y valores claros',
+                        'Desarrolla habilidades de gestión del cambio para adaptarte mejor',
+                        'Capacítate en resolución de conflictos y mediación',
+                        'Complementa tu perfil con competencias en gestión de proyectos',
+                        'Trabaja con perfiles D o I que aporten dinamismo y empuje a la acción'
+                    ],
+                    communication: 'El equipo valora tu estabilidad y confiabilidad. Para maximizar tu contribución, necesitas claridad en expectativas y tiempo para adaptarte a cambios. Tu diplomacia es valiosa, pero también necesitas expresar tus límites. Comunica tus necesidades de manera directa.'
+                },
+                C: {
+                    name: 'Cumplimiento',
+                    tagline: 'Analítico, preciso y sistemático',
+                    description: 'Eres una persona analítica, detallista y orientada a la calidad. Valoras la precisión, el orden y los procesos bien definidos. Te destacas por tu capacidad de análisis crítico, tu enfoque metodológico y tu atención al detalle. Priorizas la exactitud sobre la rapidez y buscas entender a fondo antes de actuar.',
+                    strengths: [
+                        'Excelente capacidad de análisis y pensamiento crítico',
+                        'Altísima atención al detalle y precisión',
+                        'Sistemático y organizado en tu enfoque',
+                        'Orientado a la calidad y estándares elevados',
+                        'Tomas decisiones basadas en datos y evidencia',
+                        'Previsor y planificador de contingencias'
+                    ],
+                    development: [
+                        'Aumenta tu tolerancia a la ambigüedad e imperfección',
+                        'Desarrolla mayor flexibilidad ante cambios',
+                        'Practica tomar decisiones con información incompleta',
+                        'Fortalece tus habilidades de trabajo en equipo',
+                        'Comunica tus análisis de forma más accesible',
+                        'Equilibra la búsqueda de perfección con la entrega oportuna'
+                    ],
+                    recommendations: [
+                        'Roles ideales: Análisis de datos, auditoría, investigación, control de calidad, planificación estratégica',
+                        'Busca entornos donde la precisión y calidad sean valoradas',
+                        'Desarrolla habilidades de presentación para comunicar tus análisis efectivamente',
+                        'Capacítate en herramientas de análisis avanzado y visualización de datos',
+                        'Complementa tu perfil con competencias de gestión de proyectos ágiles',
+                        'Trabaja con perfiles I o D que aporten rapidez y visión de conjunto'
+                    ],
+                    communication: 'El equipo aprecia tu rigor y análisis detallado. Para maximizar tu impacto, necesitas balance entre perfección y pragmatismo. Tu contribución es valiosa cuando puedes traducir datos complejos en insights accionables. Acepta que no toda decisión requiere análisis exhaustivo.'
+                }
+            };
+            
+            return profiles[type];
+        }
+        
+        // Observar cambios en el DOM para actualizar altura
+        const observer = new MutationObserver(sendHeight);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true
+        });
+    </script>
+</body>
+</html>
