@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Profesional - LideraVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #A8E6CF 0%, #D5F4E6 50%, #B8E0D2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 750px;
+            width: 100%;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .institutional-header {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(168, 230, 207, 0.4);
+        }
+        
+        .institutional-header .brand {
+            font-size: 12px;
+            font-weight: 500;
+            color: #3D7C5D;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #2D5F47;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            font-weight: 400;
+            color: #4A8B6A;
+            margin-bottom: 25px;
+        }
+        
+        .progress-container {
+            margin-bottom: 35px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 400;
+            color: #4A8B6A;
+            margin-bottom: 12px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(168, 230, 207, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4A8B6A, #A8E6CF);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+        
+        .instructions {
+            background: rgba(168, 230, 207, 0.2);
+            border-left: 3px solid #A8E6CF;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        .instructions h2 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #2D5F47;
+            margin-bottom: 12px;
+        }
+        
+        .instructions p {
+            font-size: 14px;
+            font-weight: 300;
+            color: #3D7C5D;
+            margin-bottom: 8px;
+        }
+        
+        .question-instruction {
+            background: rgba(168, 230, 207, 0.2);
+            border-left: 3px solid #A8E6CF;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .question-instruction p {
+            font-size: 13px;
+            font-weight: 500;
+            color: #2D5F47;
+            margin: 0;
+        }
+        
+        .question-container {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .question-container.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .block-indicator {
+            font-size: 12px;
+            font-weight: 500;
+            color: #A8E6CF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .question-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #2D5F47;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .options-container {
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            background: #ffffff;
+            border: 2px solid rgba(168, 230, 207, 0.4);
+            border-radius: 10px;
+            padding: 15px 18px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            border-color: #A8E6CF;
+            background: rgba(168, 230, 207, 0.05);
+        }
+        
+        .option input[type="radio"],
+        .option input[type="text"] {
+            margin-right: 12px;
+            cursor: pointer;
+        }
+        
+        .option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #4A8B6A;
+        }
+        
+        .option label {
+            font-size: 15px;
+            font-weight: 400;
+            color: #3D7C5D;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(168, 230, 207, 0.4);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            color: #2D5F47;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #A8E6CF;
+            background: rgba(168, 230, 207, 0.05);
+        }
+        
+        .scale-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .scale-option {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .scale-option input[type="radio"] {
+            display: none;
+        }
+        
+        .scale-label {
+            display: block;
+            padding: 15px;
+            border: 2px solid rgba(168, 230, 207, 0.4);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+            color: #3D7C5D;
+            background: #ffffff;
+        }
+        
+        .scale-option input[type="radio"]:checked + .scale-label {
+            background: linear-gradient(135deg, #4A8B6A, #A8E6CF);
+            color: #ffffff;
+            border-color: #4A8B6A;
+        }
+        
+        .scale-option .scale-label:hover {
+            border-color: #A8E6CF;
+            background: rgba(168, 230, 207, 0.1);
+        }
+        
+        .scale-hint {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #4A8B6A;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .nav-btn.prev {
+            background: rgba(168, 230, 207, 0.3);
+            color: #3D7C5D;
+        }
+        
+        .nav-btn.prev:hover {
+            background: rgba(168, 230, 207, 0.5);
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(135deg, #4A8B6A, #A8E6CF);
+            color: #ffffff;
+        }
+        
+        .nav-btn.next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 230, 207, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .error-message {
+            background: rgba(255, 150, 150, 0.15);
+            border-left: 3px solid #ff9696;
+            padding: 12px 16px;
+            margin-top: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #d64545;
+            display: none;
+        }
+        
+        .results-container {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .results-title {
+            font-size: 28px;
+            font-weight: 300;
+            color: #2D5F47;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: #2D5F47;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(168, 230, 207, 0.4);
+        }
+        
+        .result-item {
+            background: #ffffff;
+            border: 2px solid rgba(168, 230, 207, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .result-item p {
+            font-size: 15px;
+            font-weight: 300;
+            color: #3D7C5D;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        
+        .result-item strong {
+            font-weight: 500;
+            color: #2D5F47;
+        }
+        
+        .result-item ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .result-item li {
+            font-size: 14px;
+            font-weight: 300;
+            color: #3D7C5D;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        
+        .result-item.critical {
+            border-left: 4px solid #d64545;
+        }
+        
+        .result-item.warning {
+            border-left: 4px solid #f39c12;
+        }
+        
+        .result-item.strength {
+            border-left: 4px solid #4A8B6A;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .action-btn {
+            padding: 14px 28px;
+            border: 2px solid #A8E6CF;
+            background: linear-gradient(135deg, #4A8B6A, #A8E6CF);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 230, 207, 0.4);
+        }
+        
+        @media print {
+            body {
+                background: #ffffff;
+            }
+            .action-buttons, .navigation {
+                display: none;
+            }
+            .institutional-header {
+                display: block !important;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .scale-container {
+                gap: 5px;
+            }
+            
+            .scale-label {
+                padding: 12px 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- ENCABEZADO INSTITUCIONAL -->
+            <div class="institutional-header">
+                <div class="brand">LideraVE | Maria Müller Noria | Capacitación Laboral 100% online</div>
+            </div>
+            
+            <!-- INICIO -->
+            <div id="welcomeScreen">
+                <div class="header">
+                    <h1>Diagnóstico Profesional</h1>
+                    <p class="subtitle">Identifica tus fortalezas y áreas de desarrollo</p>
+                </div>
+                
+                <div class="instructions">
+                    <h2>Bienvenido al Diagnóstico Profesional</h2>
+                    <p>Este diagnóstico te ayudará a identificar tus fortalezas, áreas de mejora y crear un plan de capacitación personalizado.</p>
+                    <p><strong>Instrucciones:</strong></p>
+                    <p>• Responde todas las preguntas con honestidad</p>
+                    <p>• No hay respuestas correctas o incorrectas</p>
+                    <p>• El diagnóstico tiene 6 bloques con preguntas sobre tu perfil y habilidades</p>
+                    <p>• Al final recibirás tu análisis FODA y plan de capacitación</p>
+                </div>
+                
+                <button class="nav-btn next" onclick="startTest()" style="width: 100%;">
+                    Comenzar Diagnóstico
+                </button>
+            </div>
+            
+            <!-- PREGUNTAS -->
+            <div id="questionsArea" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-text" id="progressText">Pregunta 1 de 24</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div id="questionsContainer"></div>
+                
+                <p class="error-message" id="errorMessage">Por favor responde esta pregunta antes de continuar</p>
+                
+                <div class="navigation">
+                    <button class="nav-btn prev" id="prevBtn" onclick="previousQuestion()">
+                        Anterior
+                    </button>
+                    <button class="nav-btn next" id="nextBtn" onclick="nextQuestion()">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+            
+            <!-- RESULTADOS -->
+            <div class="results-container" id="results">
+                <h1 class="results-title">Tu Diagnóstico Profesional</h1>
+                
+                <div class="section-title">Perfil Profesional</div>
+                <div id="profileSection"></div>
+                
+                <div class="section-title">Análisis FODA</div>
+                <div id="fodaSection"></div>
+                
+                <div class="section-title">Plan de Capacitación Recomendado</div>
+                <div id="planSection"></div>
+                
+                <div class="section-title">Recomendaciones Prioritarias</div>
+                <div id="recommendationsSection"></div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="window.print()">Imprimir Resultados</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Enviar altura del contenido al padre (para iframe)
+        function sendHeight() {
+            const height = document.documentElement.scrollHeight;
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({ height: height, type: 'resize' }, '*');
+            }
+        }
+        
+        window.addEventListener('load', sendHeight);
+        
+        // Estructura de preguntas
+        const questions = [
+            // BLOQUE A
+            {
+                id: 'a1',
+                block: 'A - Perfil y Contexto',
+                title: 'Situación laboral actual',
+                instruction: 'Selecciona tu situación laboral actual',
+                type: 'radio',
+                options: [
+                    { value: 'empleado', label: 'Empleado/a' },
+                    { value: 'freelancer', label: 'Freelancer / independiente' },
+                    { value: 'emprendedor', label: 'Emprendedor/a' },
+                    { value: 'transicion', label: 'En transición laboral' }
+                ]
+            },
+            {
+                id: 'a2',
+                block: 'A - Perfil y Contexto',
+                title: 'Rol principal que desempeñas actualmente',
+                instruction: 'Escribe tu rol o posición actual',
+                type: 'text',
+                placeholder: 'Ejemplo: Gerente de proyectos, Desarrollador, Contador, etc.'
+            },
+            {
+                id: 'a3',
+                block: 'A - Perfil y Contexto',
+                title: 'Industria en la que desarrollas tu trabajo',
+                instruction: 'Selecciona la industria donde trabajas',
+                type: 'radio',
+                options: [
+                    { value: 'educacion', label: 'Educación' },
+                    { value: 'servicios', label: 'Servicios profesionales' },
+                    { value: 'tecnologia', label: 'Tecnología' },
+                    { value: 'ventas', label: 'Ventas / Comercial' },
+                    { value: 'salud', label: 'Salud' },
+                    { value: 'administracion', label: 'Administración / Operaciones' },
+                    { value: 'otra', label: 'Otra' }
+                ]
+            },
+            {
+                id: 'a4',
+                block: 'A - Perfil y Contexto',
+                title: 'Modalidad de trabajo',
+                instruction: 'Selecciona cómo trabajas actualmente',
+                type: 'radio',
+                options: [
+                    { value: 'remoto', label: 'Remoto' },
+                    { value: 'presencial', label: 'Presencial' },
+                    { value: 'hibrido', label: 'Híbrido' }
+                ]
+            },
+            {
+                id: 'a5',
+                block: 'A - Perfil y Contexto',
+                title: 'Años de experiencia profesional',
+                instruction: 'Selecciona tu nivel de experiencia',
+                type: 'radio',
+                options: [
+                    { value: '0-2', label: '0–2 años' },
+                    { value: '3-5', label: '3–5 años' },
+                    { value: '6-10', label: '6–10 años' },
+                    { value: '10+', label: 'Más de 10 años' }
+                ]
+            },
+            
+            // BLOQUE B
+            {
+                id: 'b1',
+                block: 'B - Objetivo Profesional',
+                title: '¿Cuál es tu objetivo principal para los próximos 12 meses?',
+                instruction: 'Selecciona tu objetivo principal',
+                type: 'radio',
+                options: [
+                    { value: 'mejorar', label: 'Mejorar desempeño en mi rol actual' },
+                    { value: 'ascender', label: 'Ascender o asumir liderazgo' },
+                    { value: 'cambiar_rol', label: 'Cambiar de rol' },
+                    { value: 'cambiar_industria', label: 'Cambiar de industria' },
+                    { value: 'ingresos', label: 'Aumentar ingresos / empleabilidad' },
+                    { value: 'marca', label: 'Consolidar marca profesional' }
+                ]
+            },
+            
+            // BLOQUE C
+            {
+                id: 'c1',
+                block: 'C - Habilidades Técnicas',
+                title: 'Dominio de herramientas técnicas necesarias para tu rol',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'c2',
+                block: 'C - Habilidades Técnicas',
+                title: 'Capacidad para organizar y ejecutar procesos de trabajo',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'c3',
+                block: 'C - Habilidades Técnicas',
+                title: 'Gestión de proyectos o entregables',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'c4',
+                block: 'C - Habilidades Técnicas',
+                title: 'Análisis de información para tomar decisiones',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'c5',
+                block: 'C - Habilidades Técnicas',
+                title: 'Capacidad para aprender y adoptar nuevas herramientas',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            
+            // BLOQUE D
+            {
+                id: 'd1',
+                block: 'D - Habilidades Blandas',
+                title: 'Comunicación clara y asertiva',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'd2',
+                block: 'D - Habilidades Blandas',
+                title: 'Capacidad para priorizar y gestionar tu tiempo',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'd3',
+                block: 'D - Habilidades Blandas',
+                title: 'Manejo del estrés y presión laboral',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'd4',
+                block: 'D - Habilidades Blandas',
+                title: 'Capacidad para recibir feedback y ajustar conductas',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'd5',
+                block: 'D - Habilidades Blandas',
+                title: 'Colaboración con otras personas',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'd6',
+                block: 'D - Habilidades Blandas',
+                title: 'Autonomía y autoliderazgo',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            {
+                id: 'd7',
+                block: 'D - Habilidades Blandas',
+                title: 'Pensamiento crítico y resolución de problemas',
+                instruction: 'Califica tu nivel: 1 = muy bajo, 5 = muy alto',
+                type: 'scale',
+                scale: [1, 2, 3, 4, 5]
+            },
+            
+            // BLOQUE E
+            {
+                id: 'e1',
+                block: 'E - Preguntas Conductuales',
+                title: '¿Con qué frecuencia debes rehacer tareas por falta de claridad o errores evitables?',
+                instruction: 'Selecciona la frecuencia que mejor te describe',
+                type: 'radio',
+                options: [
+                    { value: 'nunca', label: 'Nunca' },
+                    { value: 'aveces', label: 'A veces' },
+                    { value: 'frecuentemente', label: 'Frecuentemente' }
+                ]
+            },
+            {
+                id: 'e2',
+                block: 'E - Preguntas Conductuales',
+                title: '¿Te resulta difícil decir "no" o renegociar prioridades?',
+                instruction: 'Selecciona la opción que mejor te describe',
+                type: 'radio',
+                options: [
+                    { value: 'si', label: 'Sí' },
+                    { value: 'no', label: 'No' },
+                    { value: 'aveces', label: 'A veces' }
+                ]
+            },
+            {
+                id: 'e3',
+                block: 'E - Preguntas Conductuales',
+                title: '¿Sientes que trabajas mucho pero no siempre en lo más importante?',
+                instruction: 'Selecciona la opción que mejor te describe',
+                type: 'radio',
+                options: [
+                    { value: 'si', label: 'Sí' },
+                    { value: 'no', label: 'No' },
+                    { value: 'aveces', label: 'A veces' }
+                ]
+            },
+            {
+                id: 'e4',
+                block: 'E - Preguntas Conductuales',
+                title: '¿Las conversaciones difíciles te generan incomodidad o las evitas?',
+                instruction: 'Selecciona la opción que mejor te describe',
+                type: 'radio',
+                options: [
+                    { value: 'si', label: 'Sí' },
+                    { value: 'no', label: 'No' },
+                    { value: 'aveces', label: 'A veces' }
+                ]
+            },
+            
+            // BLOQUE F
+            {
+                id: 'f1',
+                block: 'F - Disponibilidad',
+                title: '¿Cuántas horas semanales puedes dedicar a tu desarrollo profesional?',
+                instruction: 'Selecciona tu disponibilidad semanal',
+                type: 'radio',
+                options: [
+                    { value: 'menos2', label: 'Menos de 2 horas' },
+                    { value: '2-4', label: '2–4 horas' },
+                    { value: '5-8', label: '5–8 horas' },
+                    { value: 'mas8', label: 'Más de 8 horas' }
+                ]
+            },
+            {
+                id: 'f2',
+                block: 'F - Disponibilidad',
+                title: '¿Qué formato de aprendizaje prefieres?',
+                instruction: 'Selecciona tu formato preferido',
+                type: 'radio',
+                options: [
+                    { value: 'cursos', label: 'Cursos online' },
+                    { value: 'lectura', label: 'Lectura guiada' },
+                    { value: 'taller', label: 'Taller práctico' },
+                    { value: 'mentoria', label: 'Mentoría' },
+                    { value: 'microlearning', label: 'Microlearning' }
+                ]
+            }
+        ];
+        
+        let currentQuestion = 0;
+        const answers = {};
+        
+        function startTest() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('questionsArea').style.display = 'block';
+            generateQuestions();
+            showQuestion(0);
+            setTimeout(sendHeight, 100);
+        }
+        
+        function generateQuestions() {
+            const container = document.getElementById('questionsContainer');
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                let html = `
+                    <div class="block-indicator">${q.block}</div>
+                    <div class="question-title">${q.title}</div>
+                `;
+                
+                if (q.instruction) {
+                    html += `
+                        <div class="question-instruction">
+                            <p>💡 ${q.instruction}</p>
+                        </div>
+                    `;
+                }
+                
+                html += `<div class="options-container">`;
+                
+                if (q.type === 'radio') {
+                    q.options.forEach(opt => {
+                        html += `
+                            <div class="option" onclick="selectOption('${q.id}', '${opt.value}')">
+                                <input type="radio" name="${q.id}" value="${opt.value}" id="${q.id}-${opt.value}">
+                                <label for="${q.id}-${opt.value}">${opt.label}</label>
+                            </div>
+                        `;
+                    });
+                } else if (q.type === 'text') {
+                    html += `
+                        <input type="text" id="${q.id}" placeholder="${q.placeholder || ''}" 
+                               onchange="saveTextAnswer('${q.id}', this.value)">
+                    `;
+                } else if (q.type === 'scale') {
+                    html += `<div class="scale-container">`;
+                    q.scale.forEach(num => {
+                        html += `
+                            <div class="scale-option">
+                                <input type="radio" name="${q.id}" value="${num}" id="${q.id}-${num}" 
+                                       onchange="saveAnswer('${q.id}', '${num}')">
+                                <label for="${q.id}-${num}" class="scale-label">${num}</label>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                    html += `<div class="scale-hint"><span>Muy bajo</span><span>Muy alto</span></div>`;
+                }
+                
+                html += `</div>`;
+                
+                questionDiv.innerHTML = html;
+                container.appendChild(questionDiv);
+            });
+        }
+        
+        function selectOption(questionId, value) {
+            const radio = document.getElementById(`${questionId}-${value}`);
+            radio.checked = true;
+            saveAnswer(questionId, value);
+        }
+        
+        function saveAnswer(questionId, value) {
+            answers[questionId] = value;
+        }
+        
+        function saveTextAnswer(questionId, value) {
+            answers[questionId] = value;
+        }
+        
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateProgress();
+            updateNavButtons();
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // Restaurar respuestas previas
+            const q = questions[index];
+            if (answers[q.id]) {
+                if (q.type === 'text') {
+                    document.getElementById(q.id).value = answers[q.id];
+                } else {
+                    const input = document.querySelector(`input[name="${q.id}"][value="${answers[q.id]}"]`);
+                    if (input) input.checked = true;
+                }
+            }
+            
+            setTimeout(sendHeight, 100);
+        }
+        
+        function updateProgress() {
+            const percentage = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+        }
+        
+        function updateNavButtons() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Ver Resultados';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+                window.scrollTo(0, 0);
+            }
+        }
+        
+        function nextQuestion() {
+            const q = questions[currentQuestion];
+            
+            // Validar que la pregunta actual esté respondida
+            if (!answers[q.id] || answers[q.id].trim() === '') {
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                showQuestion(currentQuestion + 1);
+                window.scrollTo(0, 0);
+            } else {
+                // Última pregunta - mostrar resultados
+                generateResults();
+                document.getElementById('questionsArea').style.display = 'none';
+                document.getElementById('results').style.display = 'block';
+                window.scrollTo(0, 0);
+                setTimeout(sendHeight, 100);
+            }
+        }
+        
+        function generateResults() {
+            // Calcular promedios
+            const avgC = (parseInt(answers.c1) + parseInt(answers.c2) + parseInt(answers.c3) + 
+                         parseInt(answers.c4) + parseInt(answers.c5)) / 5;
+            const avgD = (parseInt(answers.d1) + parseInt(answers.d2) + parseInt(answers.d3) + 
+                         parseInt(answers.d4) + parseInt(answers.d5) + parseInt(answers.d6) + 
+                         parseInt(answers.d7)) / 7;
+            
+            // PERFIL
+            let profile = `<div class="result-item">`;
+            profile += `<p><strong>Situación laboral:</strong> ${getLabelA1(answers.a1)}</p>`;
+            profile += `<p><strong>Rol:</strong> ${answers.a2}</p>`;
+            profile += `<p><strong>Industria:</strong> ${getLabelA3(answers.a3)}</p>`;
+            profile += `<p><strong>Modalidad:</strong> ${getLabelA4(answers.a4)}</p>`;
+            profile += `<p><strong>Experiencia:</strong> ${answers.a5} años</p>`;
+            profile += `<p><strong>Objetivo principal:</strong> ${getLabelB1(answers.b1)}</p>`;
+            profile += `</div>`;
+            document.getElementById('profileSection').innerHTML = profile;
+            
+            // FODA
+            document.getElementById('fodaSection').innerHTML = generateFODA(answers, avgC, avgD);
+            
+            // PLAN
+            document.getElementById('planSection').innerHTML = generatePlan(answers, avgC, avgD);
+            
+            // RECOMENDACIONES
+            document.getElementById('recommendationsSection').innerHTML = generateRecommendations(answers, avgC, avgD);
+        }
+        
+        function generateFODA(data, avgC, avgD) {
+            let html = '';
+            
+            // FORTALEZAS
+            html += '<div class="result-item strength"><strong>Fortalezas:</strong><ul>';
+            let strengths = [];
+            
+            if (parseInt(data.c1) >= 4) strengths.push('Excelente dominio de herramientas técnicas de tu rol');
+            if (parseInt(data.c2) >= 4) strengths.push('Alta capacidad de organización y ejecución de procesos');
+            if (parseInt(data.c3) >= 4) strengths.push('Sólida gestión de proyectos y entregables');
+            if (parseInt(data.c4) >= 4) strengths.push('Capacidad destacada de análisis para toma de decisiones');
+            if (parseInt(data.c5) >= 4) strengths.push('Gran facilidad para aprender nuevas herramientas');
+            if (parseInt(data.d1) >= 4) strengths.push('Comunicación clara y asertiva bien desarrollada');
+            if (parseInt(data.d2) >= 4) strengths.push('Excelente gestión del tiempo y prioridades');
+            if (parseInt(data.d3) >= 4) strengths.push('Alto manejo del estrés y presión laboral');
+            if (parseInt(data.d4) >= 4) strengths.push('Receptividad al feedback y capacidad de ajuste');
+            if (parseInt(data.d5) >= 4) strengths.push('Fuerte habilidad de colaboración y trabajo en equipo');
+            if (parseInt(data.d6) >= 4) strengths.push('Autonomía y autoliderazgo bien consolidados');
+            if (parseInt(data.d7) >= 4) strengths.push('Pensamiento crítico y resolución de problemas sobresalientes');
+            
+            if (strengths.length === 0) {
+                strengths.push('Apertura al desarrollo profesional y autoconocimiento');
+            }
+            
+            strengths.forEach(s => html += `<li>${s}</li>`);
+            html += '</ul></div>';
+            
+            // DEBILIDADES
+            html += '<div class="result-item critical"><strong>Debilidades:</strong><ul>';
+            let weaknesses = [];
+            
+            if (parseInt(data.c1) <= 2) weaknesses.push('Brecha crítica en dominio de herramientas técnicas');
+            if (parseInt(data.c2) <= 2) weaknesses.push('Dificultad significativa en organización de procesos');
+            if (parseInt(data.c3) <= 2) weaknesses.push('Limitaciones importantes en gestión de proyectos');
+            if (parseInt(data.c4) <= 2) weaknesses.push('Análisis de información para decisiones requiere desarrollo urgente');
+            if (parseInt(data.c5) <= 2) weaknesses.push('Dificultad para adoptar nuevas herramientas');
+            if (parseInt(data.d1) <= 2) weaknesses.push('Comunicación asertiva necesita fortalecimiento urgente');
+            if (parseInt(data.d2) <= 2) weaknesses.push('Gestión del tiempo y prioridades es una brecha crítica');
+            if (parseInt(data.d3) <= 2) weaknesses.push('Manejo del estrés requiere atención inmediata');
+            if (parseInt(data.d4) <= 2) weaknesses.push('Receptividad al feedback necesita desarrollo');
+            if (parseInt(data.d5) <= 2) weaknesses.push('Colaboración con otros representa un desafío importante');
+            if (parseInt(data.d6) <= 2) weaknesses.push('Autonomía y autoliderazgo son áreas críticas');
+            if (parseInt(data.d7) <= 2) weaknesses.push('Pensamiento crítico requiere fortalecimiento significativo');
+            
+            if (data.e1 === 'frecuentemente') weaknesses.push('Retrabajo frecuente por falta de claridad o errores evitables');
+            if (data.e2 === 'si') weaknesses.push('Dificultad para establecer límites y renegociar prioridades');
+            if (data.e3 === 'si') weaknesses.push('Desalineación entre esfuerzo y prioridades estratégicas');
+            if (data.e4 === 'si') weaknesses.push('Evitación de conversaciones difíciles');
+            
+            if (weaknesses.length === 0) {
+                weaknesses.push('No se identificaron debilidades críticas en este diagnóstico');
+            }
+            
+            weaknesses.forEach(w => html += `<li>${w}</li>`);
+            html += '</ul></div>';
+            
+            // OPORTUNIDADES
+            html += '<div class="result-item"><strong>Oportunidades:</strong><ul>';
+            let opportunities = [];
+            
+            if (data.b1 === 'ascender') opportunities.push('Posibilidad de asumir roles de liderazgo en el corto plazo');
+            if (data.b1 === 'cambiar_rol') opportunities.push('Transición hacia un rol más alineado con tus intereses');
+            if (data.b1 === 'cambiar_industria') opportunities.push('Reinvención profesional en una nueva industria');
+            if (data.b1 === 'ingresos') opportunities.push('Mejora de empleabilidad y potencial de ingresos');
+            if (data.b1 === 'marca') opportunities.push('Consolidación de tu marca personal y visibilidad profesional');
+            
+            if (data.a3 === 'tecnologia') opportunities.push('Sector con alta demanda y oportunidades de crecimiento');
+            if (data.a4 === 'remoto') opportunities.push('Acceso a oportunidades globales por modalidad remota');
+            if (data.a5 === '0-2') opportunities.push('Etapa ideal para construir bases sólidas de tu carrera');
+            if (data.a5 === '10+') opportunities.push('Experiencia amplia que puede apalancarse hacia mentoría o liderazgo');
+            
+            opportunities.push('Capacitación personalizada para cerrar brechas específicas');
+            
+            opportunities.forEach(o => html += `<li>${o}</li>`);
+            html += '</ul></div>';
+            
+            // AMENAZAS
+            html += '<div class="result-item warning"><strong>Amenazas:</strong><ul>';
+            let threats = [];
+            
+            if (avgC <= 2.5 && avgD <= 2.5) {
+                threats.push('Brechas técnicas y blandas simultáneas pueden limitar progreso profesional');
+            }
+            if (avgC <= 2) threats.push('Brecha técnica crítica puede afectar competitividad en el mercado');
+            if (avgD <= 2) threats.push('Habilidades blandas insuficientes pueden limitar crecimiento profesional');
+            if (data.e3 === 'si') threats.push('Riesgo de agotamiento por trabajo no alineado a prioridades');
+            if (data.e2 === 'si') threats.push('Sobrecarga laboral por dificultad para establecer límites');
+            if (data.f1 === 'menos2') threats.push('Tiempo limitado para capacitación puede ralentizar desarrollo');
+            
+            if (data.a1 === 'transicion') {
+                threats.push('Período de transición requiere claridad estratégica para evitar estancamiento');
+            }
+            
+            if (threats.length === 0) {
+                threats.push('No se identificaron amenazas críticas en este momento');
+            }
+            
+            threats.forEach(t => html += `<li>${t}</li>`);
+            html += '</ul></div>';
+            
+            return html;
+        }
+        
+        function generatePlan(data, avgC, avgD) {
+            let html = '';
+            let courses = [];
+            
+            // Cursos técnicos
+            if (avgC <= 3) {
+                html += '<div class="result-item critical"><strong>Área Técnica (Prioridad Alta):</strong><ul>';
+                
+                if (parseInt(data.c1) <= 2) courses.push('Curso de herramientas técnicas específicas de tu rol');
+                else if (parseInt(data.c1) === 3) courses.push('Actualización en herramientas técnicas del sector');
+                
+                if (parseInt(data.c2) <= 2) courses.push('Curso de organización y gestión de procesos');
+                else if (parseInt(data.c2) === 3) courses.push('Metodologías ágiles y optimización de procesos');
+                
+                if (parseInt(data.c3) <= 2) courses.push('Curso de gestión de proyectos básico');
+                else if (parseInt(data.c3) === 3) courses.push('Certificación en gestión de proyectos (PMI o similar)');
+                
+                if (parseInt(data.c4) <= 2) courses.push('Curso de análisis de datos y toma de decisiones');
+                else if (parseInt(data.c4) === 3) courses.push('Business Intelligence y análisis estratégico');
+                
+                if (parseInt(data.c5) <= 2) courses.push('Curso de actualización tecnológica continua');
+                
+                courses.forEach(c => html += `<li>${c}</li>`);
+                html += '</ul></div>';
+            }
+            
+            // Cursos de habilidades blandas
+            courses = [];
+            if (avgD <= 2) {
+                html += '<div class="result-item critical"><strong>Habilidades Blandas (Prioridad Crítica):</strong><ul>';
+                
+                if (parseInt(data.d1) <= 2 || data.e4 === 'si') {
+                    courses.push('Curso de comunicación asertiva y conversaciones difíciles');
+                }
+                if (parseInt(data.d2) <= 2 || data.e3 === 'si' || data.e2 === 'si') {
+                    courses.push('Curso de gestión del tiempo y prioridades estratégicas');
+                }
+                if (parseInt(data.d3) <= 2) {
+                    courses.push('Curso de manejo del estrés y resiliencia profesional');
+                }
+                if (parseInt(data.d4) <= 2) {
+                    courses.push('Taller de feedback constructivo y mejora continua');
+                }
+                if (parseInt(data.d5) <= 2) {
+                    courses.push('Curso de trabajo en equipo y colaboración efectiva');
+                }
+                if (parseInt(data.d6) <= 2) {
+                    courses.push('Curso de autoliderazgo y gestión personal');
+                }
+                if (parseInt(data.d7) <= 2) {
+                    courses.push('Curso de pensamiento crítico y resolución de problemas');
+                }
+                
+                if (data.e1 === 'frecuentemente') {
+                    courses.push('Taller de atención al detalle y prevención de errores');
+                }
+                
+                courses.forEach(c => html += `<li>${c}</li>`);
+                html += '</ul></div>';
+            } else if (avgD <= 3) {
+                html += '<div class="result-item warning"><strong>Habilidades Blandas (Prioridad Media):</strong><ul>';
+                
+                if (parseInt(data.d1) === 3) courses.push('Taller de comunicación efectiva avanzada');
+                if (parseInt(data.d2) === 3) courses.push('Taller de productividad y priorización');
+                if (parseInt(data.d3) === 3) courses.push('Taller de gestión emocional');
+                if (parseInt(data.d6) === 3) courses.push('Taller de liderazgo personal');
+                if (parseInt(data.d7) === 3) courses.push('Taller de análisis y solución de problemas complejos');
+                
+                courses.forEach(c => html += `<li>${c}</li>`);
+                html += '</ul></div>';
+            }
+            
+            // Formato y tiempo
+            html += '<div class="result-item"><strong>Formato recomendado:</strong> ';
+            html += getLabelF2(data.f2);
+            html += '<br><strong>Tiempo disponible:</strong> ';
+            html += getLabelF1(data.f1);
+            html += ' horas semanales</div>';
+            
+            return html;
+        }
+        
+        function generateRecommendations(data, avgC, avgD) {
+            let html = '';
+            let recommendations = [];
+            
+            if (avgD <= 2 || avgC <= 2) {
+                html += '<div class="result-item critical"><strong>Acción Inmediata:</strong><ul>';
+                
+                if (avgD <= 2) {
+                    recommendations.push('Iniciar formación en habilidades blandas es tu prioridad número 1');
+                }
+                if (avgC <= 2) {
+                    recommendations.push('Reforzar competencias técnicas para mantener competitividad profesional');
+                }
+                if (data.e2 === 'si') {
+                    recommendations.push('Aprender a establecer límites claros y comunicar expectativas');
+                }
+                if (data.e3 === 'si') {
+                    recommendations.push('Implementar sistema de priorización basado en impacto');
+                }
+                if (data.e1 === 'frecuentemente') {
+                    recommendations.push('Desarrollar checklist y procesos de validación antes de entregar');
+                }
+                
+                recommendations.forEach(r => html += `<li>${r}</li>`);
+                html += '</ul></div>';
+            }
+            
+            recommendations = [];
+            html += '<div class="result-item"><strong>Próximos Pasos:</strong><ul>';
+            
+            recommendations.push('Selecciona 2-3 áreas de desarrollo prioritarias según tu objetivo');
+            recommendations.push('Establece metas específicas y medibles para cada área');
+            recommendations.push('Dedica tiempo semanal consistente a tu capacitación');
+            
+            if (data.f1 === 'menos2') {
+                recommendations.push('Considera microlearning o formatos flexibles dada tu disponibilidad limitada');
+            }
+            
+            if (data.b1 === 'ascender') {
+                recommendations.push('Busca oportunidades de liderazgo informal en tu rol actual');
+            }
+            
+            recommendations.push('Solicita feedback regular para validar tu progreso');
+            recommendations.push('Documenta tus logros y aprendizajes para actualizar tu perfil profesional');
+            
+            recommendations.forEach(r => html += `<li>${r}</li>`);
+            html += '</ul></div>';
+            
+            html += '<div class="result-item strength"><strong>Mensaje Final:</strong><br>';
+            html += 'Este diagnóstico es tu punto de partida. El desarrollo profesional es un proceso continuo que requiere compromiso y acción consistente. Prioriza las áreas críticas, celebra tus fortalezas y mantén una mentalidad de crecimiento. ¡Tienes todo lo necesario para avanzar hacia tus objetivos!';
+            html += '</div>';
+            
+            return html;
+        }
+        
+        // Funciones auxiliares
+        function getLabelA1(value) {
+            const labels = {
+                'empleado': 'Empleado/a',
+                'freelancer': 'Freelancer / independiente',
+                'emprendedor': 'Emprendedor/a',
+                'transicion': 'En transición laboral'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelA3(value) {
+            const labels = {
+                'educacion': 'Educación',
+                'servicios': 'Servicios profesionales',
+                'tecnologia': 'Tecnología',
+                'ventas': 'Ventas / Comercial',
+                'salud': 'Salud',
+                'administracion': 'Administración / Operaciones',
+                'otra': 'Otra'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelA4(value) {
+            const labels = {
+                'remoto': 'Remoto',
+                'presencial': 'Presencial',
+                'hibrido': 'Híbrido'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelB1(value) {
+            const labels = {
+                'mejorar': 'Mejorar desempeño en rol actual',
+                'ascender': 'Ascender o asumir liderazgo',
+                'cambiar_rol': 'Cambiar de rol',
+                'cambiar_industria': 'Cambiar de industria',
+                'ingresos': 'Aumentar ingresos / empleabilidad',
+                'marca': 'Consolidar marca profesional'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelF1(value) {
+            const labels = {
+                'menos2': 'Menos de 2',
+                '2-4': '2-4',
+                '5-8': '5-8',
+                'mas8': 'Más de 8'
+            };
+            return labels[value] || value;
+        }
+        
+        function getLabelF2(value) {
+            const labels = {
+                'cursos': 'Cursos online',
+                'lectura': 'Lectura guiada',
+                'taller': 'Taller práctico',
+                'mentoria': 'Mentoría',
+                'microlearning': 'Microlearning'
+            };
+            return labels[value] || value;
+        }
+        
+        // Observar cambios en el DOM para actualizar altura
+        const observer = new MutationObserver(sendHeight);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true
+        });
+    </script>
+</body>
+</html>
