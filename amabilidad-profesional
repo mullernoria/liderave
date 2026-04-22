@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Amabilidad en el Trabajo - LideraVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #FFD7D7 0%, #FFE8E8 50%, #FFF0F0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 750px;
+            width: 100%;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .institutional-header {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(255, 182, 193, 0.4);
+        }
+        
+        .institutional-header .brand {
+            font-size: 12px;
+            font-weight: 500;
+            color: #C85A7C;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #8B4854;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            font-weight: 400;
+            color: #C85A7C;
+            margin-bottom: 25px;
+        }
+        
+        .progress-container {
+            margin-bottom: 35px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 400;
+            color: #C85A7C;
+            margin-bottom: 12px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 182, 193, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #E88CA7, #FFB6C1);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+        
+        .instructions {
+            background: rgba(255, 182, 193, 0.15);
+            border-left: 3px solid #FFB6C1;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        .instructions h2 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #8B4854;
+            margin-bottom: 12px;
+        }
+        
+        .instructions p {
+            font-size: 14px;
+            font-weight: 300;
+            color: #C85A7C;
+            margin-bottom: 8px;
+        }
+        
+        .question-instruction {
+            background: rgba(255, 182, 193, 0.15);
+            border-left: 3px solid #FFB6C1;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .question-instruction p {
+            font-size: 13px;
+            font-weight: 500;
+            color: #8B4854;
+            margin: 0;
+        }
+        
+        .question-container {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .question-container.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .question-number {
+            font-size: 13px;
+            font-weight: 500;
+            color: #FFB6C1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        .statement-box {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.08), rgba(255, 240, 240, 0.15));
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .statement-text {
+            font-size: 18px;
+            font-weight: 400;
+            color: #8B4854;
+            line-height: 1.6;
+        }
+        
+        .scale-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .scale-option {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .scale-option input[type="radio"] {
+            display: none;
+        }
+        
+        .scale-label {
+            display: block;
+            padding: 15px 10px;
+            border: 2px solid rgba(255, 182, 193, 0.4);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            font-weight: 500;
+            color: #C85A7C;
+            background: #ffffff;
+        }
+        
+        .scale-option input[type="radio"]:checked + .scale-label {
+            background: linear-gradient(135deg, #E88CA7, #FFB6C1);
+            color: #ffffff;
+            border-color: #E88CA7;
+        }
+        
+        .scale-option .scale-label:hover {
+            border-color: #FFB6C1;
+            background: rgba(255, 182, 193, 0.1);
+        }
+        
+        .scale-hint {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #C85A7C;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .nav-btn.prev {
+            background: rgba(255, 182, 193, 0.25);
+            color: #C85A7C;
+        }
+        
+        .nav-btn.prev:hover {
+            background: rgba(255, 182, 193, 0.4);
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(135deg, #E88CA7, #FFB6C1);
+            color: #ffffff;
+        }
+        
+        .nav-btn.next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 182, 193, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .error-message {
+            background: rgba(255, 150, 150, 0.15);
+            border-left: 3px solid #ff9696;
+            padding: 12px 16px;
+            margin-top: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 400;
+            color: #d64545;
+            display: none;
+        }
+        
+        .results-container {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .results-title {
+            font-size: 28px;
+            font-weight: 300;
+            color: #8B4854;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .overall-score {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.15), rgba(255, 240, 240, 0.2));
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255, 182, 193, 0.3);
+        }
+        
+        .score-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #C85A7C;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .score-percentage {
+            font-size: 64px;
+            font-weight: 300;
+            color: #8B4854;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+        
+        .score-level {
+            font-size: 24px;
+            font-weight: 500;
+            color: #E88CA7;
+        }
+        
+        .profile-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #E88CA7, #FFB6C1);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        
+        .dimensions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .dimension-card {
+            background: #ffffff;
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .dimension-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #8B4854;
+            margin-bottom: 12px;
+        }
+        
+        .dimension-bar {
+            height: 10px;
+            background: rgba(255, 182, 193, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .dimension-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #E88CA7, #FFB6C1);
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+        
+        .dimension-percent {
+            font-size: 18px;
+            font-weight: 500;
+            color: #C85A7C;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: #8B4854;
+            margin: 30px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 182, 193, 0.3);
+        }
+        
+        .content-box {
+            background: #ffffff;
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .content-box p {
+            font-size: 15px;
+            font-weight: 300;
+            color: #C85A7C;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        .content-box ul {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+        
+        .content-box li {
+            font-size: 14px;
+            font-weight: 300;
+            color: #C85A7C;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .content-box strong {
+            font-weight: 500;
+            color: #8B4854;
+        }
+        
+        .alert-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #FFC107;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        
+        .alert-box h3 {
+            font-size: 16px;
+            font-weight: 500;
+            color: #F57C00;
+            margin-bottom: 12px;
+        }
+        
+        .highlight-box {
+            background: rgba(255, 182, 193, 0.15);
+            border-left: 4px solid #E88CA7;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+        
+        .strength-item {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+        
+        .development-item {
+            background: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid #FF9800;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+        
+        .myth-box {
+            background: rgba(244, 67, 54, 0.05);
+            border: 2px solid rgba(244, 67, 54, 0.2);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        
+        .truth-box {
+            background: rgba(76, 175, 80, 0.05);
+            border: 2px solid rgba(76, 175, 80, 0.2);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .action-btn {
+            padding: 14px 28px;
+            border: 2px solid #FFB6C1;
+            background: linear-gradient(135deg, #E88CA7, #FFB6C1);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 182, 193, 0.4);
+        }
+        
+        @media print {
+            body {
+                background: #ffffff;
+            }
+            .action-buttons, .navigation {
+                display: none;
+            }
+            .institutional-header {
+                display: block !important;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .dimensions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .scale-container {
+                gap: 5px;
+            }
+            
+            .scale-label {
+                padding: 12px 6px;
+                font-size: 13px;
+            }
+            
+            .statement-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- ENCABEZADO INSTITUCIONAL -->
+            <div class="institutional-header">
+                <div class="brand">LideraVE | Maria Müller Noria | Capacitación Laboral 100% online</div>
+            </div>
+            
+            <!-- INICIO -->
+            <div id="welcomeScreen">
+                <div class="header">
+                    <h1>Test de Amabilidad en el Trabajo</h1>
+                    <p class="subtitle">Evalúa tu nivel de amabilidad profesional</p>
+                </div>
+                
+                <div class="instructions">
+                    <h2>Bienvenido al Test de Amabilidad en el Trabajo</h2>
+                    <p>Este test evaluará tu nivel de amabilidad en el entorno laboral. La amabilidad no es debilidad, es una fortaleza de liderazgo cuando se combina con asertividad.</p>
+                    
+                    <p><strong>¿Qué evalúa este test?</strong></p>
+                    <ul style="margin-left: 20px; margin-bottom: 10px;">
+                        <li><strong>Empatía Activa:</strong> Tu capacidad de escuchar y entender a otros</li>
+                        <li><strong>Respeto y Cortesía:</strong> Cómo tratas a colegas, clientes y superiores</li>
+                        <li><strong>Generosidad de Espíritu:</strong> Tu disposición a ayudar sin esperar nada a cambio</li>
+                        <li><strong>Paciencia y Tolerancia:</strong> Tu calma con personas y situaciones difíciles</li>
+                        <li><strong>Amabilidad Asertiva:</strong> Tu capacidad de ser amable Y firme simultáneamente</li>
+                        <li><strong>Construcción de Ambiente Positivo:</strong> Tu contribución a un clima laboral agradable</li>
+                    </ul>
+                    
+                    <p><strong>Importante:</strong></p>
+                    <p>• Ser amable NO significa ser complaciente</p>
+                    <p>• Los mejores líderes son amables pero firmes</p>
+                    <p>• La amabilidad construye influencia a largo plazo</p>
+                    
+                    <p><strong>Instrucciones:</strong></p>
+                    <p>• Leerás 24 afirmaciones sobre comportamientos laborales</p>
+                    <p>• Califica con qué frecuencia te comportas así (1 = Nunca, 5 = Siempre)</p>
+                    <p>• Responde según cómo realmente actúas, no cómo te gustaría actuar</p>
+                </div>
+                
+                <button class="nav-btn next" onclick="startTest()" style="width: 100%;">
+                    Comenzar Test
+                </button>
+            </div>
+            
+            <!-- PREGUNTAS -->
+            <div id="questionsArea" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-text" id="progressText">Pregunta 1 de 24</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div id="questionsContainer"></div>
+                
+                <p class="error-message" id="errorMessage">Por favor selecciona una respuesta antes de continuar</p>
+                
+                <div class="navigation">
+                    <button class="nav-btn prev" id="prevBtn" onclick="previousQuestion()">
+                        Anterior
+                    </button>
+                    <button class="nav-btn next" id="nextBtn" onclick="nextQuestion()">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+            
+            <!-- RESULTADOS -->
+            <div class="results-container" id="results">
+                <h1 class="results-title">Tus Resultados de Amabilidad</h1>
+                
+                <div class="overall-score">
+                    <div class="score-label">Tu Nivel de Amabilidad Profesional</div>
+                    <div class="score-percentage" id="overallScore">0%</div>
+                    <div class="score-level" id="scoreLevel"></div>
+                    <div class="profile-badge" id="profileBadge"></div>
+                </div>
+                
+                <div id="alertSection"></div>
+                
+                <div class="section-title">Desglose por Dimensiones</div>
+                <div class="dimensions-grid" id="dimensionsGrid"></div>
+                
+                <div class="section-title">Interpretación de Tu Resultado</div>
+                <div class="content-box" id="interpretationBox"></div>
+                
+                <div class="section-title">Mitos vs Verdades sobre la Amabilidad</div>
+                <div class="content-box" id="mythsBox"></div>
+                
+                <div class="section-title">Tus Fortalezas</div>
+                <div class="content-box" id="strengthsBox"></div>
+                
+                <div class="section-title">Áreas de Desarrollo</div>
+                <div class="content-box" id="developmentBox"></div>
+                
+                <div class="section-title">Plan de Acción Semanal</div>
+                <div class="content-box" id="actionPlanBox"></div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="window.print()">Imprimir Resultados</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Enviar altura del contenido al padre (para iframe)
+        function sendHeight() {
+            const height = document.documentElement.scrollHeight;
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({ height: height, type: 'resize' }, '*');
+            }
+        }
+        
+        window.addEventListener('load', sendHeight);
+        
+        // Preguntas del test
+        // dimension: empathy, respect, generosity, patience, assertive, environment
+        // reverse: true si puntuación alta = comportamiento negativo
+        const questions = [
+            // EMPATÍA ACTIVA
+            { id: 1, text: "Cuando alguien me cuenta un problema, escucho genuinamente sin interrumpir", dimension: "empathy", reverse: false },
+            { id: 2, text: "Me esfuerzo por entender perspectivas diferentes a la mía, incluso cuando no estoy de acuerdo", dimension: "empathy", reverse: false },
+            { id: 3, text: "Cuando alguien habla, estoy pensando en mi respuesta en lugar de realmente escuchar", dimension: "empathy", reverse: true },
+            { id: 4, text: "Noto cuando alguien está teniendo un mal día y me acerco a preguntarle si está bien", dimension: "empathy", reverse: false },
+            
+            // RESPETO Y CORTESÍA
+            { id: 5, text: "Trato con igual respeto a personas de todos los niveles jerárquicos", dimension: "respect", reverse: false },
+            { id: 6, text: "Uso lenguaje cortés y respetuoso incluso cuando estoy bajo presión", dimension: "respect", reverse: false },
+            { id: 7, text: "Hablo de manera diferente con superiores que con subordinados", dimension: "respect", reverse: true },
+            { id: 8, text: "Agradezco explícitamente cuando alguien me ayuda, sin importar quién sea", dimension: "respect", reverse: false },
+            
+            // GENEROSIDAD DE ESPÍRITU
+            { id: 9, text: "Ayudo a colegas con sus tareas cuando veo que lo necesitan, sin que me lo pidan", dimension: "generosity", reverse: false },
+            { id: 10, text: "Comparto conocimiento y recursos abiertamente sin guardármelos", dimension: "generosity", reverse: false },
+            { id: 11, text: "Solo ayudo a otros si sé que obtendré algo a cambio", dimension: "generosity", reverse: true },
+            { id: 12, text: "Doy crédito públicamente a quienes contribuyeron a un éxito compartido", dimension: "generosity", reverse: false },
+            
+            // PACIENCIA Y TOLERANCIA
+            { id: 13, text: "Mantengo la calma cuando trabajo con personas que aprenden más lento", dimension: "patience", reverse: false },
+            { id: 14, text: "Me irrito fácilmente cuando las cosas no salen como espero", dimension: "patience", reverse: true },
+            { id: 15, text: "Doy segundas oportunidades a las personas que cometen errores", dimension: "patience", reverse: false },
+            { id: 16, text: "Puedo explicar lo mismo varias veces sin mostrar frustración", dimension: "patience", reverse: false },
+            
+            // AMABILIDAD ASERTIVA
+            { id: 17, text: "Puedo decir 'no' de manera firme pero respetuosa cuando algo no es mi responsabilidad", dimension: "assertive", reverse: false },
+            { id: 18, text: "Me cuesta establecer límites por miedo a ser visto como poco amable", dimension: "assertive", reverse: true },
+            { id: 19, text: "Puedo dar feedback difícil de manera directa pero compasiva", dimension: "assertive", reverse: false },
+            { id: 20, text: "Soy capaz de mantener mi amabilidad mientras defiendo mis ideas con firmeza", dimension: "assertive", reverse: false },
+            
+            // CONSTRUCCIÓN DE AMBIENTE POSITIVO
+            { id: 21, text: "Me tomo el tiempo de reconocer y celebrar los logros de mis colegas", dimension: "environment", reverse: false },
+            { id: 22, text: "Participo en chismes o conversaciones negativas sobre compañeros", dimension: "environment", reverse: true },
+            { id: 23, text: "Contribuyo activamente a crear un ambiente laboral agradable y positivo", dimension: "environment", reverse: false },
+            { id: 24, text: "Cuando alguien nuevo llega al equipo, me esfuerzo por hacerlo sentir bienvenido", dimension: "environment", reverse: false }
+        ];
+        
+        let currentQuestion = 0;
+        const answers = {};
+        
+        function startTest() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('questionsArea').style.display = 'block';
+            generateQuestions();
+            showQuestion(0);
+            setTimeout(sendHeight, 100);
+        }
+        
+        function generateQuestions() {
+            const container = document.getElementById('questionsContainer');
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                questionDiv.id = `question-${index}`;
+                
+                let html = `
+                    <div class="question-number">Pregunta ${index + 1} de ${questions.length}</div>
+                    
+                    <div class="question-instruction">
+                        <p>💝 ¿Con qué frecuencia te comportas así?</p>
+                    </div>
+                    
+                    <div class="statement-box">
+                        <div class="statement-text">"${q.text}"</div>
+                    </div>
+                    
+                    <div class="scale-container">
+                `;
+                
+                for (let i = 1; i <= 5; i++) {
+                    html += `
+                        <div class="scale-option">
+                            <input type="radio" name="q${index}" value="${i}" id="q${index}-${i}" 
+                                   onchange="saveAnswer(${index}, ${i})">
+                            <label for="q${index}-${i}" class="scale-label">${i}</label>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                    </div>
+                    <div class="scale-hint">
+                        <span>Nunca</span>
+                        <span>Siempre</span>
+                    </div>
+                `;
+                
+                questionDiv.innerHTML = html;
+                container.appendChild(questionDiv);
+            });
+        }
+        
+        function saveAnswer(questionIndex, value) {
+            answers[questionIndex] = value;
+        }
+        
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            currentQuestion = index;
+            updateProgress();
+            updateNavButtons();
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            if (answers[index]) {
+                const radio = document.querySelector(`input[name="q${index}"][value="${answers[index]}"]`);
+                if (radio) radio.checked = true;
+            }
+            
+            setTimeout(sendHeight, 100);
+        }
+        
+        function updateProgress() {
+            const percentage = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+        }
+        
+        function updateNavButtons() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = 'Ver Resultados';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+                window.scrollTo(0, 0);
+            }
+        }
+        
+        function nextQuestion() {
+            if (answers[currentQuestion] === undefined) {
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                showQuestion(currentQuestion + 1);
+                window.scrollTo(0, 0);
+            } else {
+                calculateAndShowResults();
+            }
+        }
+        
+        function calculateAndShowResults() {
+            const scores = {
+                empathy: [],
+                respect: [],
+                generosity: [],
+                patience: [],
+                assertive: [],
+                environment: []
+            };
+            
+            questions.forEach((q, index) => {
+                let score = answers[index];
+                if (q.reverse) {
+                    score = 6 - score;
+                }
+                scores[q.dimension].push(score);
+            });
+            
+            const dimensionAverages = {};
+            for (let dim in scores) {
+                const avg = scores[dim].reduce((a, b) => a + b, 0) / scores[dim].length;
+                dimensionAverages[dim] = avg;
+            }
+            
+            const overallAvg = Object.values(dimensionAverages).reduce((a, b) => a + b, 0) / Object.keys(dimensionAverages).length;
+            const overallPercent = Math.round((overallAvg / 5) * 100);
+            
+            displayResults(overallPercent, dimensionAverages);
+            
+            document.getElementById('questionsArea').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            window.scrollTo(0, 0);
+            setTimeout(sendHeight, 100);
+        }
+        
+        function displayResults(overallPercent, dims) {
+            document.getElementById('overallScore').textContent = overallPercent + '%';
+            
+            const level = getLevel(overallPercent);
+            document.getElementById('scoreLevel').textContent = level;
+            
+            const profile = getProfile(dims);
+            document.getElementById('profileBadge').textContent = profile;
+            
+            displayAlerts(overallPercent, dims);
+            displayDimensions(dims);
+            displayInterpretation(overallPercent, dims);
+            displayMyths();
+            displayStrengths(dims);
+            displayDevelopment(dims);
+            displayActionPlan(dims);
+        }
+        
+        function getLevel(percent) {
+            if (percent >= 85) return 'Altamente Amable';
+            if (percent >= 70) return 'Amable';
+            if (percent >= 50) return 'Amabilidad Moderada';
+            return 'Mejorable';
+        }
+        
+        function getProfile(dims) {
+            const empathy = dims.empathy;
+            const assertive = dims.assertive;
+            
+            if (empathy >= 4 && assertive >= 4) return 'El Asertivo Equilibrado ⭐';
+            if (empathy >= 4 && assertive < 3) return 'El Complaciente';
+            if (empathy < 3 && assertive >= 4) return 'El Profesional Distante';
+            if (empathy >= 4) return 'El Empático Natural';
+            if (assertive >= 4) return 'El Asertivo Directo';
+            return 'En Desarrollo';
+        }
+        
+        function displayAlerts(overall, dims) {
+            const alerts = [];
+            
+            if (dims.assertive < 2.5) {
+                alerts.push('⚠️ <strong>Alerta de Complacencia:</strong> Tu dificultad para establecer límites puede estar generando sobrecarga y resentimiento. Ser amable no significa decir sí a todo.');
+            }
+            
+            if (dims.respect < 2.5) {
+                alerts.push('⚠️ <strong>Falta de Respeto Consistente:</strong> Tratas de manera diferente a personas según su posición. Esto puede dañar tu credibilidad como líder.');
+            }
+            
+            if (dims.empathy >= 4 && dims.assertive < 2.5) {
+                alerts.push('⚠️ <strong>Perfil de Complaciente:</strong> Eres muy empático pero te cuesta establecer límites. Este patrón puede llevar al agotamiento y a que abusen de tu amabilidad.');
+            }
+            
+            if (overall < 40) {
+                alerts.push('⚠️ <strong>Nivel Crítico de Amabilidad:</strong> Tu bajo nivel de amabilidad puede estar afectando tus relaciones laborales y limitando tu capacidad de influencia y liderazgo.');
+            }
+            
+            if (alerts.length > 0) {
+                let html = '<div class="alert-box"><h3>Señales de Alerta</h3>';
+                alerts.forEach(alert => {
+                    html += `<p style="color: #F57C00; margin-bottom: 10px;">${alert}</p>`;
+                });
+                html += '</div>';
+                document.getElementById('alertSection').innerHTML = html;
+            }
+        }
+        
+        function displayDimensions(dims) {
+            const dimensionNames = {
+                empathy: 'Empatía Activa',
+                respect: 'Respeto y Cortesía',
+                generosity: 'Generosidad de Espíritu',
+                patience: 'Paciencia y Tolerancia',
+                assertive: 'Amabilidad Asertiva',
+                environment: 'Ambiente Positivo'
+            };
+            
+            let html = '';
+            for (let dim in dims) {
+                const percent = Math.round((dims[dim] / 5) * 100);
+                html += `
+                    <div class="dimension-card">
+                        <div class="dimension-title">${dimensionNames[dim]}</div>
+                        <div class="dimension-bar">
+                            <div class="dimension-fill" style="width: ${percent}%"></div>
+                        </div>
+                        <div class="dimension-percent">${percent}%</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('dimensionsGrid').innerHTML = html;
+        }
+        
+        function displayInterpretation(overall, dims) {
+            let html = '';
+            
+            if (overall >= 85) {
+                html = `
+                    <p><strong>Nivel Excepcional de Amabilidad Profesional</strong></p>
+                    <p>Demuestras un nivel sobresaliente de amabilidad en el trabajo. Eres empático, respetuoso, generoso y paciente, pero también sabes establecer límites cuando es necesario. Esta combinación de calidez y firmeza es la marca de líderes altamente efectivos.</p>
+                    <div class="highlight-box">
+                        <p><strong>Tu superpoder:</strong> Las personas naturalmente confían en ti y te siguen porque combinas competencia técnica con humanidad genuina.</p>
+                    </div>
+                `;
+            } else if (overall >= 70) {
+                html = `
+                    <p><strong>Buen Nivel de Amabilidad Profesional</strong></p>
+                    <p>Tienes una base sólida de amabilidad en el trabajo. Generalmente eres considerado, empático y respetuoso. Hay algunas áreas específicas donde puedes fortalecer tu amabilidad o tu capacidad de combinarla con asertividad.</p>
+                    <div class="highlight-box">
+                        <p><strong>Oportunidad:</strong> Con ajustes específicos en tus áreas más bajas, puedes convertirte en un líder excepcionalmente amable y efectivo.</p>
+                    </div>
+                `;
+            } else if (overall >= 50) {
+                html = `
+                    <p><strong>Amabilidad Moderada con Espacio de Mejora</strong></p>
+                    <p>Tu nivel de amabilidad es funcional pero inconsistente. En algunas situaciones o con ciertas personas eres amable, en otras no tanto. Esta inconsistencia puede estar limitando tu influencia y la calidad de tus relaciones laborales.</p>
+                    <div class="highlight-box">
+                        <p><strong>Punto de inflexión:</strong> Estás en el momento perfecto para hacer cambios significativos que transformen tu efectividad como líder.</p>
+                    </div>
+                `;
+            } else {
+                html = `
+                    <p><strong>Nivel Crítico - Desarrollo Urgente Necesario</strong></p>
+                    <p>Tu bajo nivel de amabilidad profesional puede estar afectando significativamente tus relaciones laborales, tu influencia y tus oportunidades de crecimiento. Es probable que seas percibido como distante, duro o poco empático.</p>
+                    <div class="highlight-box">
+                        <p><strong>Buena noticia:</strong> La amabilidad es una habilidad que se desarrolla con práctica consciente. Cada pequeña acción amable construye un nuevo patrón.</p>
+                    </div>
+                `;
+            }
+            
+            // Análisis de perfil
+            if (dims.empathy >= 4 && dims.assertive >= 4) {
+                html += `
+                    <p style="margin-top: 20px;"><strong>Tu Perfil: El Asertivo Equilibrado ⭐</strong></p>
+                    <p>Has logrado el equilibrio ideal: eres genuinamente empático y amable, PERO también estableces límites claros y te comunicas con firmeza cuando es necesario. Este es el perfil de liderazgo más efectivo.</p>
+                `;
+            } else if (dims.empathy >= 4 && dims.assertive < 3) {
+                html += `
+                    <p style="margin-top: 20px;"><strong>Tu Perfil: El Complaciente</strong></p>
+                    <p>Eres muy empático y considerado, pero te cuesta establecer límites. Esto puede llevar a sobrecarga, resentimiento y a que otros abusen de tu generosidad. Necesitas desarrollar amabilidad asertiva urgentemente.</p>
+                `;
+            } else if (dims.empathy < 3 && dims.respect >= 4) {
+                html += `
+                    <p style="margin-top: 20px;"><strong>Tu Perfil: El Profesional Distante</strong></p>
+                    <p>Eres cortés y profesional, pero te falta conexión emocional genuina con otros. Las personas pueden respetarte pero no sentirse cercanas a ti, lo que limita tu influencia.</p>
+                `;
+            }
+            
+            document.getElementById('interpretationBox').innerHTML = html;
+        }
+        
+        function displayMyths() {
+            const html = `
+                <div class="myth-box">
+                    <p><strong>❌ MITO:</strong> "Ser amable es ser débil"</p>
+                </div>
+                <div class="truth-box">
+                    <p><strong>✅ VERDAD:</strong> La amabilidad requiere fortaleza emocional. Es más fácil ser duro que ser amable bajo presión.</p>
+                </div>
+                
+                <div class="myth-box" style="margin-top: 15px;">
+                    <p><strong>❌ MITO:</strong> "Ser amable significa decir sí a todo"</p>
+                </div>
+                <div class="truth-box">
+                    <p><strong>✅ VERDAD:</strong> La verdadera amabilidad incluye establecer límites saludables. Puedes decir "no" con respeto.</p>
+                </div>
+                
+                <div class="myth-box" style="margin-top: 15px;">
+                    <p><strong>❌ MITO:</strong> "Los líderes efectivos son duros, no amables"</p>
+                </div>
+                <div class="truth-box">
+                    <p><strong>✅ VERDAD:</strong> Investigación muestra que líderes amables generan mayor lealtad, productividad y resultados a largo plazo.</p>
+                </div>
+                
+                <div class="myth-box" style="margin-top: 15px;">
+                    <p><strong>❌ MITO:</strong> "Ser amable toma mucho tiempo"</p>
+                </div>
+                <div class="truth-box">
+                    <p><strong>✅ VERDAD:</strong> Pequeños actos de amabilidad (un "gracias", escuchar 2 minutos) construyen relaciones que ahorran tiempo después.</p>
+                </div>
+            `;
+            
+            document.getElementById('mythsBox').innerHTML = html;
+        }
+        
+        function displayStrengths(dims) {
+            const strengths = [];
+            
+            if (dims.empathy >= 4) strengths.push('<div class="strength-item"><strong>Empatía excepcional:</strong> Escuchas genuinamente y entiendes perspectivas diversas. Esta es una fortaleza de liderazgo crítica.</div>');
+            if (dims.respect >= 4) strengths.push('<div class="strength-item"><strong>Respeto consistente:</strong> Tratas a todos con igual consideración, sin importar su posición. Esto genera confianza profunda.</div>');
+            if (dims.generosity >= 4) strengths.push('<div class="strength-item"><strong>Generosidad genuina:</strong> Ayudas y compartes sin esperar nada a cambio. Esto construye capital relacional invaluable.</div>');
+            if (dims.patience >= 4) strengths.push('<div class="strength-item"><strong>Paciencia notable:</strong> Mantienes la calma con personas y situaciones difíciles. Esta es una señal de madurez emocional.</div>');
+            if (dims.assertive >= 4) strengths.push('<div class="strength-item"><strong>Amabilidad asertiva:</strong> Puedes ser amable y firme simultáneamente. Este equilibrio es el santo grial del liderazgo efectivo.</div>');
+            if (dims.environment >= 4) strengths.push('<div class="strength-item"><strong>Constructor de cultura:</strong> Contribuyes activamente a crear ambientes positivos. Tu presencia mejora la moral del equipo.</div>');
+            
+            if (strengths.length === 0) {
+                strengths.push('<p>Actualmente no se identificaron fortalezas destacadas (puntajes de 4+). Esto significa que tienes una gran oportunidad de desarrollo en todas las áreas de amabilidad profesional.</p>');
+            }
+            
+            document.getElementById('strengthsBox').innerHTML = strengths.join('');
+        }
+        
+        function displayDevelopment(dims) {
+            const development = [];
+            
+            if (dims.empathy < 3) development.push('<div class="development-item"><strong>Prioridad - Empatía:</strong> Practica escuchar sin interrumpir. Antes de responder, pregúntate: "¿Realmente entendí su perspectiva?"</div>');
+            if (dims.respect < 3) development.push('<div class="development-item"><strong>Prioridad crítica - Respeto:</strong> Observa si tratas diferente a personas según su posición. Compromiso: tratar a todos con igual consideración esta semana.</div>');
+            if (dims.generosity < 3) development.push('<div class="development-item"><strong>Desarrollar generosidad:</strong> Ofrece ayuda 3 veces esta semana sin que te la pidan. Comparte un conocimiento valioso con alguien.</div>');
+            if (dims.patience < 3) development.push('<div class="development-item"><strong>Cultivar paciencia:</strong> Cuando sientas irritación, pausa 5 segundos antes de responder. Recuerda: todos estamos aprendiendo.</div>');
+            if (dims.assertive < 3) development.push('<div class="development-item"><strong>Prioridad crítica - Asertividad:</strong> Practica decir "no" con respeto esta semana. Frase: "Aprecio que pienses en mí, pero no puedo en este momento."</div>');
+            if (dims.environment < 3) development.push('<div class="development-item"><strong>Construir ambiente positivo:</strong> Reconoce públicamente a un colega esta semana. Evita totalmente conversaciones negativas.</div>');
+            
+            if (development.length === 0) {
+                development.push('<p>No se identificaron áreas críticas de desarrollo. Enfócate en elevar tus dimensiones más bajas hacia el nivel de excelencia (4.5+).</p>');
+            }
+            
+            document.getElementById('developmentBox').innerHTML = development.join('');
+        }
+        
+        function displayActionPlan(dims) {
+            const dimArray = Object.entries(dims).sort((a, b) => a[1] - b[1]);
+            const lowest = dimArray[0];
+            
+            const actions = {
+                empathy: {
+                    title: 'Desarrollar Empatía Activa',
+                    weekly: [
+                        'Lunes: Practica la "escucha de nivel 3" - escucha sin planear tu respuesta',
+                        'Miércoles: Pregunta a alguien "¿Cómo estás realmente?" y escucha la respuesta completa',
+                        'Viernes: Antes de juzgar una situación, pregúntate "¿Qué no sé sobre esto?"',
+                        'Diario: Al final del día, recuerda una perspectiva diferente que aprendiste'
+                    ]
+                },
+                respect: {
+                    title: 'Fortalecer Respeto Consistente',
+                    weekly: [
+                        'Lunes: Observa si tratas diferente a personas según su posición',
+                        'Martes-Jueves: Practica dar igual atención a todos en reuniones',
+                        'Viernes: Agradece explícitamente a 3 personas que normalmente no agradecerías',
+                        'Toda la semana: Usa "por favor" y "gracias" sin excepciones'
+                    ]
+                },
+                generosity: {
+                    title: 'Cultivar Generosidad de Espíritu',
+                    weekly: [
+                        'Esta semana: Ofrece ayuda 3 veces sin que te la pidan',
+                        'Comparte un conocimiento valioso con alguien que lo necesite',
+                        'Da crédito público a alguien cuya contribución normalmente no reconocerías',
+                        'Haz un favor pequeño diario sin esperar nada a cambio'
+                    ]
+                },
+                patience: {
+                    title: 'Desarrollar Paciencia y Tolerancia',
+                    weekly: [
+                        'Cuando sientas irritación: pausa 5 segundos antes de responder',
+                        'Esta semana: explica algo complejo 2 veces a alguien sin mostrar frustración',
+                        'Identifica tu mayor "trigger" de impaciencia y evítalo conscientemente',
+                        'Practica la frase: "Tómate el tiempo que necesites"'
+                    ]
+                },
+                assertive: {
+                    title: 'Balance: Amabilidad + Asertividad',
+                    weekly: [
+                        'Lunes: Identifica 3 situaciones donde dices "sí" pero deberías decir "no"',
+                        'Martes-Jueves: Practica decir "no" con respeto usando esta frase: "Aprecio que pienses en mí, pero no puedo en este momento porque [razón breve]"',
+                        'Viernes: Da feedback directo pero amable a alguien',
+                        'Reflexión semanal: ¿Dónde confundo amabilidad con complacencia?'
+                    ]
+                },
+                environment: {
+                    title: 'Construir Ambiente Positivo',
+                    weekly: [
+                        'Lunes: Reconoce públicamente el trabajo de un colega',
+                        'Miércoles: Inicia una conversación positiva en lugar de sumarte a quejas',
+                        'Jueves: Celebra un logro pequeño de alguien que nadie más notó',
+                        'Toda la semana: Compromiso 100% - cero chismes, cero conversaciones negativas'
+                    ]
+                }
+            };
+            
+            const plan = actions[lowest[0]];
+            
+            let html = `
+                <p><strong>Tu área de mayor oportunidad: ${plan.title}</strong></p>
+                <p>Basado en tu resultado, este es tu plan de acción para la próxima semana:</p>
+                <ul>
+            `;
+            
+            plan.weekly.forEach(action => {
+                html += `<li>${action}</li>`;
+            });
+            
+            html += `
+                </ul>
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <p><strong>Regla de oro:</strong> Al final de cada día, pregúntate: "¿Hoy fui amable?" No se trata de perfección, se trata de dirección. Cada acto de amabilidad construye el hábito.</p>
+                </div>
+                <p style="margin-top: 20px;"><em>"La amabilidad es el lenguaje que los sordos pueden oír y los ciegos pueden ver." - Mark Twain</em></p>
+            `;
+            
+            document.getElementById('actionPlanBox').innerHTML = html;
+        }
+        
+        const observer = new MutationObserver(sendHeight);
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true
+        });
+    </script>
+</body>
+</html>
